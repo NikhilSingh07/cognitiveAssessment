@@ -11,6 +11,8 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+// gets called when the user opens the application. 
+
 app.get( '/getItems', (req, res)=> {
  
   res.json(shapeGrid);
