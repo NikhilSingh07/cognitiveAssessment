@@ -1,5 +1,5 @@
 const express = require('express')
-const [shapeGrid]= require('./shapeGrid')
+const shapeGrid= require('./shapeGrid')
 const app = express()
 const port = 3000
 
