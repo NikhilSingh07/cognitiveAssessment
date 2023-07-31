@@ -1,4 +1,8 @@
 
+const totalPatterns = 3;
+const patterns = [ 
+
+];
 const shapeGrid  = [
     {shapeId: '101', shapeTypeId: '1', shapeType: 'Circle', shapeSize: 'small', producedFruit: false},
     {shapeId: '102', shapeTypeId: '1', shapeType: 'Circle', shapeSize: 'medium', producedFruit: false},
@@ -27,7 +31,6 @@ const shapeGrid  = [
     {shapeId: '125', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'}
 ];
 
-
 //Time complexity: O(n), assuming Math.random() takes a constant time.
 //Space complexity: O(1), no extra memeory is used.
 // Fisher Yates algorithm
@@ -46,7 +49,33 @@ const shuffleGrid = (shapeGrid) => {
 }
 
 
+// TC: O(n)
+// SC: O(m)
+const createPairs = (shapeGrid) => {
+    console.log('createPairs called!');
+
+    shuffleGrid(shapeGrid);
+
+    const shapes = shapeGrid.filter(item => item.shapeTypeId !== 'null');
+
+    const uniqueShapeTypes = new Set(shapes.map(item => item.shapeTypeId));
+
+    console.log(uniqueShapeTypes);
+
+    if(patterns.length === 0) {
+        for (let i = 0; i < totalPatterns; i++) {
+            patterns.push({ pattern: `${i+1}`, firstElementID: Array.from(uniqueShapeTypes)[i * 2], secondElementID: Array.from(uniqueShapeTypes)[i * 2 + 1] });
+        }
+    }
+
+    console.log(patterns);
+
+};
+  
+ 
+
 module.exports = {
 shapeGrid,    
-shuffleGrid
+shuffleGrid,
+createPairs
 };
