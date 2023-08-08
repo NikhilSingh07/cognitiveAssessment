@@ -1,5 +1,5 @@
 const express = require('express')
-const { shapeGrid, shuffleGrid, createPairs } = require('./shapeGrid');
+const { patterns, shapeGrid, shuffleGrid, createPairs, getPatterns, getShapeGrid } = require('./shapeGrid');
 const app = express()
 const port = 3000
 
@@ -12,13 +12,24 @@ app.listen(port, () => {
 })
 
 
-// gets called when the user opens the application. 
+
 app.get( '/getItems', (req, res)=> {
   createPairs(shapeGrid);
   shuffleGrid(shapeGrid);
+  res.json(getShapeGrid);
+});
 
+// gets called when the user opens the application. 
+app.get('/initializeItems', (req, res) => {
+
+  createPairs(shapeGrid);
+  shuffleGrid(shapeGrid);
   res.json(shapeGrid);
+});
+
+app.get('/getPatterns', (req, res) => {
 
 
-}
-);
+  console.log(getPatterns())
+  res.json(getPatterns());  
+})

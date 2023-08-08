@@ -4,32 +4,44 @@ const patterns = [
 
 ];
 const shapeGrid  = [
-    {shapeId: '101', shapeTypeId: '1', shapeType: 'Circle', shapeSize: 'small', producedFruit: false},
-    {shapeId: '102', shapeTypeId: '1', shapeType: 'Circle', shapeSize: 'medium', producedFruit: false},
-    {shapeId: '103', shapeTypeId: '1', shapeType: 'Circle', shapeSize: 'large', producedFruit: false},
-    {shapeId: '104', shapeTypeId: '2', shapeType: 'Square', shapeSize: 'small', producedFruit: false},
-    {shapeId: '105', shapeTypeId: '2', shapeType: 'Square', shapeSize: 'medium', producedFruit: false},
-    {shapeId: '106', shapeTypeId: '2', shapeType: 'Square', shapeSize: 'large', producedFruit: false},
-    {shapeId: '107', shapeTypeId: '3', shapeType: 'Triangle', shapeSize: 'small', producedFruit: false},
-    {shapeId: '108', shapeTypeId: '3', shapeType: 'Triangle', shapeSize: 'medium', producedFruit: false},
-    {shapeId: '109', shapeTypeId: '3', shapeType: 'Triangle', shapeSize: 'large', producedFruit: false},
-    {shapeId: '110', shapeTypeId: '4', shapeType: 'Star', shapeSize: 'small', producedFruit: false},
-    {shapeId: '111', shapeTypeId: '4', shapeType: 'Star', shapeSize: 'medium', producedFruit: false},
-    {shapeId: '112', shapeTypeId: '4', shapeType: 'Star', shapeSize: 'large', producedFruit: false},
-    {shapeId: '113', shapeTypeId: '5', shapeType: 'Hexagon', shapeSize: 'small', producedFruit: false},
-    {shapeId: '114', shapeTypeId: '5', shapeType: 'Hexagon', shapeSize: 'medium', producedFruit: false},
-    {shapeId: '115', shapeTypeId: '5', shapeType: 'Hexagon', shapeSize: 'large', producedFruit: false},
-    {shapeId: '116', shapeTypeId: '6', shapeType: 'Diamond', shapeSize: 'small', producedFruit: false},
-    {shapeId: '117', shapeTypeId: '6', shapeType: 'Diamond', shapeSize: 'medium', producedFruit: false},
-    {shapeId: '118', shapeTypeId: '6', shapeType: 'Diamond', shapeSize: 'large', producedFruit: false},
-    {shapeId: '119', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'},
-    {shapeId: '120', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'},
-    {shapeId: '121', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'},
-    {shapeId: '122', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'},
-    {shapeId: '123', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'},
-    {shapeId: '124', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'},
-    {shapeId: '125', shapeTypeId: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null'}
+    {shapeId: '101', shapeTypeId: '1', pattern: 'null', shapeType: 'Circle', shapeSize: 'small', producedFruit: false, fruit: 'null'},
+    {shapeId: '102', shapeTypeId: '1', pattern: 'null', shapeType: 'Circle', shapeSize: 'medium', producedFruit: false, fruit: 'null'},
+    {shapeId: '103', shapeTypeId: '1', pattern: 'null', shapeType: 'Circle', shapeSize: 'large', producedFruit: false, fruit: 'null'},
+    {shapeId: '104', shapeTypeId: '2', pattern: 'null', shapeType: 'Square', shapeSize: 'small', producedFruit: false, fruit: 'null'},
+    {shapeId: '105', shapeTypeId: '2', pattern: 'null', shapeType: 'Square', shapeSize: 'medium', producedFruit: false, fruit: 'null'},
+    {shapeId: '106', shapeTypeId: '2', pattern: 'null', shapeType: 'Square', shapeSize: 'large', producedFruit: false, fruit: 'null'},
+    {shapeId: '107', shapeTypeId: '3', pattern: 'null', shapeType: 'Triangle', shapeSize: 'small', producedFruit: false, fruit: 'null'},
+    {shapeId: '108', shapeTypeId: '3', pattern: 'null', shapeType: 'Triangle', shapeSize: 'medium', producedFruit: false, fruit: 'null'},
+    {shapeId: '109', shapeTypeId: '3', pattern: 'null', shapeType: 'Triangle', shapeSize: 'large', producedFruit: false, fruit: 'null'},
+    {shapeId: '110', shapeTypeId: '4', pattern: 'null', shapeType: 'Star', shapeSize: 'small', producedFruit: false, fruit: 'null'},
+    {shapeId: '111', shapeTypeId: '4', pattern: 'null', shapeType: 'Star', shapeSize: 'medium', producedFruit: false, fruit: 'null'},
+    {shapeId: '112', shapeTypeId: '4', pattern: 'null', shapeType: 'Star', shapeSize: 'large', producedFruit: false, fruit: 'null'},
+    {shapeId: '113', shapeTypeId: '5', pattern: 'null', shapeType: 'Hexagon', shapeSize: 'small', producedFruit: false, fruit: 'null'},
+    {shapeId: '114', shapeTypeId: '5', pattern: 'null', shapeType: 'Hexagon', shapeSize: 'medium', producedFruit: false, fruit: 'null'},
+    {shapeId: '115', shapeTypeId: '5', pattern: 'null', shapeType: 'Hexagon', shapeSize: 'large', producedFruit: false, fruit: 'null'},
+    {shapeId: '116', shapeTypeId: '6', pattern: 'null', shapeType: 'Diamond', shapeSize: 'small', producedFruit: false, fruit: 'null'},
+    {shapeId: '117', shapeTypeId: '6', pattern: 'null', shapeType: 'Diamond', shapeSize: 'medium', producedFruit: false, fruit: 'null'},
+    {shapeId: '118', shapeTypeId: '6', pattern: 'null', shapeType: 'Diamond', shapeSize: 'large', producedFruit: false, fruit: 'null'},
+    {shapeId: '119', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'},
+    {shapeId: '120', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'},
+    {shapeId: '121', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'},
+    {shapeId: '122', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'},
+    {shapeId: '123', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'},
+    {shapeId: '124', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'},
+    {shapeId: '125', shapeTypeId: 'null', pattern: 'null', shapeType: 'null', shapeSize: 'null', producedFruit: 'null', fruit: 'null'}
 ];
+
+
+
+const getPatterns = () => {
+
+    return patterns;
+} 
+
+const getShapeGrid = () => {
+    return shapeGrid;
+}
+
 
 //Time complexity: O(n), assuming Math.random() takes a constant time.
 //Space complexity: O(1), no extra memeory is used.
@@ -51,6 +63,7 @@ const shuffleGrid = (shapeGrid) => {
 
 // TC: O(n)
 // SC: O(m)
+
 const createPairs = (shapeGrid) => {
     console.log('createPairs called!');
 
@@ -66,16 +79,84 @@ const createPairs = (shapeGrid) => {
         for (let i = 0; i < totalPatterns; i++) {
             patterns.push({ pattern: `${i+1}`, firstElementID: Array.from(uniqueShapeTypes)[i * 2], secondElementID: Array.from(uniqueShapeTypes)[i * 2 + 1] });
         }
+
+        initializeItems();
     }
 
-    console.log(patterns);
+    //console.log(patterns);
 
 };
   
+
+const initializeItems = () => {
+
+    if(patterns.length!=0) {
+
+        for(let i = 0; i<patterns.length; i++) {
+
+            for(let j =0; j<shapeGrid.length; j++) {
+
+                switch(patterns[i].pattern) {
+
+                    case '1':
+
+                        if(patterns[i].firstElementID == shapeGrid[j].shapeTypeId || patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
+                             
+                            shapeGrid[j].pattern = '1'
+                            shapeGrid[j].producedFruit = false;
+
+                        }
+                        
+                    break;
+                    
+                    case '2':
+
+                        if(patterns[i].firstElementID == shapeGrid[j].shapeTypeId ) {
+                             
+                            shapeGrid[j].pattern = '2';
+                            shapeGrid[j].producedFruit = true;
+                            shapeGrid[j].fruit = 'Apple';
+                        }
+
+                        if(patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
+
+                            shapeGrid[j].pattern = '2';
+                        }
+
+                    break;
+                    
+                    case '3':
+
+                        if(patterns[i].firstElementID == shapeGrid[j].shapeTypeId ) {
+                             
+                            shapeGrid[j].pattern = '3';
+                            shapeGrid[j].producedFruit = true;
+                            shapeGrid[j].fruit = 'Pear';
+                        }
+
+                        if(patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
+
+                            shapeGrid[j].pattern = '3';
+                        }
+
+                    break;    
+
+                }
+            }
+
+        }    
+        
+
+    } else {
+        console.log('patterns not created yet!.');
+    }
+}
  
 
 module.exports = {
 shapeGrid,    
 shuffleGrid,
-createPairs
+createPairs,
+getPatterns,
+getShapeGrid
 };
