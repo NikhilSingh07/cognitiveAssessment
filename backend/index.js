@@ -1,5 +1,5 @@
 const express = require('express')
-const { patterns, shapeGrid, shuffleGrid, createPairs, getPatterns, getShapeGrid, updateGrid } = require('./shapeGrid');
+const { patterns, shapeGrid, shuffleGrid, createPairs, getPatterns, getShapeGrid, updateGrid, getFruitCount, updateFruitCount, getTotalFruits } = require('./shapeGrid');
 const app = express()
 const port = 3000
 
@@ -40,11 +40,25 @@ app.get('/getPatterns', (req, res) => {
 
 app.post('/clickedItem', (req, res) => {
 
-  console.log('Received request body:', req.body);
-  const shapeId = req.body.shapeId;
-  updateGrid(shapeId);
-  shuffleGrid(shapeGrid);
- // console.log(getShapeGrid);
-  res.json(getShapeGrid());
+  if(getFruitCount() < getTotalFruits()) {
+
+    console.log('Received request body:', req.body);
+    
+
+    const shapeId = req.body.shapeId;
+
+    updateGrid(shapeId);
+    shuffleGrid(shapeGrid);
+   // console.log(getShapeGrid);
+    res.json({
+      fruitFound:getFruitCount(),
+      shapeGrid: getShapeGrid() 
+    });
+
+  } else {
+
+    res.json({"status": 'User has found all the fruits in given Trial!.'});
+  }
+
 
 });

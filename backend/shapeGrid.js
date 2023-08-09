@@ -3,6 +3,10 @@ const totalPatterns = 3;
 const patterns = [ 
 
 ];
+
+let fruitsCounter = 0;
+const totalFruits = 6;
+
 const shapeGrid  = [
     {shapeId: '101', shapeTypeId: '1', pattern: 'null', shapeType: 'Circle', shapeSize: 'small', producedFruit: false, hasProducedFruit: false, fruit: 'null'},
     {shapeId: '102', shapeTypeId: '1', pattern: 'null', shapeType: 'Circle', shapeSize: 'medium', producedFruit: false, hasProducedFruit: false, fruit: 'null'},
@@ -32,6 +36,25 @@ const shapeGrid  = [
 ];
 
 
+const getFruitCount = () => {
+
+    return fruitsCounter;
+}
+
+const updateFruitCount = () => {
+
+   fruitsCounter += 1;
+}
+
+const getTotalFruits = () => {
+
+    return totalFruits;
+}
+
+const updateTotalFruits = (updatedFruitsCount) => {
+
+    totalFruits = updateFruitCount;
+}
 
 const getPatterns = () => {
 
@@ -56,6 +79,7 @@ const updateGrid = (shapeId) => {
                 if (clickedShape.producedFruit && !clickedShape.hasProducedFruit) {
 
                     clickedShape.hasProducedFruit = true;
+                    updateFruitCount();
                 }
              }
 
@@ -179,5 +203,8 @@ shuffleGrid,
 createPairs,
 getPatterns,
 getShapeGrid,
-updateGrid
+updateGrid,
+getFruitCount,
+updateFruitCount,
+getTotalFruits
 };
