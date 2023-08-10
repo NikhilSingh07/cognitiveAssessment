@@ -36,8 +36,9 @@ app.get('/getPatterns', (req, res) => {
   console.log(getPatterns());
   if(getPatterns().length != 0) {
     res.json({
-      "Trial": getCurrentTrial(),
-      "Patterns": getPatterns()
+      "total trails": getTotalTrials(),
+      "current trial": getCurrentTrial(),
+      "patterns": getPatterns()
     }); 
   } else {
     res.json({
@@ -61,6 +62,7 @@ app.post('/clickedItem', (req, res) => {
     shuffleGrid(shapeGrid);
    // console.log(getShapeGrid);
     res.json({
+      trial: getCurrentTrial(),
       fruitFound:getFruitCount(),
       shapeGrid: getShapeGrid() 
     });
