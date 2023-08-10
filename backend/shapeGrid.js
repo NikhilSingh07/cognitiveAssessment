@@ -1,10 +1,10 @@
 
+const totalTrials = 3;
 const totalPatterns = 3;
-const patterns = [ 
-
-];
+const patterns = [];
 
 let fruitsCounter = 0;
+let currentTrial = 0;
 const totalFruits = 6;
 
 const shapeGrid  = [
@@ -36,6 +36,11 @@ const shapeGrid  = [
 ];
 
 
+const getTotalTrials =() => {
+
+    return totalTrials;
+}
+
 const getFruitCount = () => {
 
     return fruitsCounter;
@@ -44,6 +49,10 @@ const getFruitCount = () => {
 const updateFruitCount = () => {
 
    fruitsCounter += 1;
+}
+
+const initializeFruitCount = () =>{
+    fruitsCounter = 0;
 }
 
 const getTotalFruits = () => {
@@ -61,8 +70,120 @@ const getPatterns = () => {
     return patterns;
 } 
 
+const resetShapeGrid = () => {
+
+    shapeGrid.forEach(shape => {
+        shape.producedFruit = false;
+        shape.hasProducedFruit = false;
+        shape.fruit = 'null';
+      });
+}
+
+const updateShapeGrid = (fruitProducedByID, fruit) => {
+
+    shapeGrid.forEach(shape => {
+
+        if(shape.shapeTypeId === fruitProducedByID) {
+            shape.producedFruit = true;
+            shape.fruit = fruit;
+        }
+    })
+}
+
+const updatePatterns = () =>{
+
+    resetShapeGrid();
+
+    if(getPatterns().length > 0 ){
+
+        if(getCurrentTrial() % 2 !== 0) {
+
+            console.log(getPatterns());   
+
+            for (const pattern of getPatterns()) {
+                if (pattern.pattern === "3") {
+                  //pattern.fruitProducedByID = pattern.secondElementID;
+                   if(pattern.fruitProducedByID === pattern.firstElementID) {
+
+                        pattern.fruitProducedByID = pattern.secondElementID;
+
+                    } else if(pattern.fruitProducedByID === pattern.secondElementID) {
+
+                        pattern.fruitProducedByID = pattern.firstElementID;
+                    }
+
+                  updateShapeGrid(pattern.fruitProducedByID, "Pear");
+                }
+    
+                if(pattern.pattern === "2") {
+
+                    if(pattern.fruitProducedByID === pattern.firstElementID) {
+
+                        pattern.fruitProducedByID = pattern.secondElementID;
+
+                    } else if(pattern.fruitProducedByID === pattern.secondElementID) {
+
+                        pattern.fruitProducedByID = pattern.firstElementID;
+                    }
+
+                   updateShapeGrid(pattern.fruitProducedByID, "Apple")
+                }
+              }
+        } else {
+
+            console.log(getPatterns()); 
+
+            for(const pattern of getPatterns()) {
+
+
+                if (pattern.pattern === "3") {
+
+                     if(pattern.fruitProducedByID === pattern.firstElementID) {
+  
+                          pattern.fruitProducedByID = pattern.firstElementID;
+  
+                      } else if(pattern.fruitProducedByID === pattern.secondElementID) {
+  
+                          pattern.fruitProducedByID = pattern.secondElementID;
+                      }
+  
+                    updateShapeGrid(pattern.fruitProducedByID, "Pear");
+                  }
+    
+                if(pattern.pattern === "2") {
+
+                    if(pattern.fruitProducedByID === pattern.firstElementID) {
+
+                        pattern.fruitProducedByID = pattern.secondElementID;
+
+                    } else if(pattern.fruitProducedByID === pattern.secondElementID) {
+
+                        pattern.fruitProducedByID = pattern.firstElementID;
+                    }
+                    updateShapeGrid(pattern.fruitProducedByID, "Apple");
+                }
+
+            }
+        }
+    } else {
+
+        console.log("Patterns are Empty!.")
+    }
+
+
+}
+
+
 const getShapeGrid = () => {
     return shapeGrid;
+}
+
+const getCurrentTrial = () => {
+    return currentTrial;
+}
+
+const updateCurrentTrial = () => {
+    currentTrial += 1;
 }
 
 
@@ -71,7 +192,7 @@ const updateGrid = (shapeId) => {
        
     const clickedShape = shapeGrid.find(shape => shape.shapeId === shapeId);
 
-    console.log("Clicked Shape:", clickedShape, "Shape ID:", shapeId);
+   // console.log("Clicked Shape:", clickedShape, "Shape ID:", shapeId);
     if(clickedShape) {
 
              if(clickedShape.shapeTypeId !== 'null') {
@@ -109,22 +230,25 @@ const shuffleGrid = (shapeGrid) => {
 // SC: O(m)
 
 const createPairs = (shapeGrid) => {
-    console.log('createPairs called!');
-
-    shuffleGrid(shapeGrid);
-
-    const shapes = shapeGrid.filter(item => item.shapeTypeId !== 'null');
-
-    const uniqueShapeTypes = new Set(shapes.map(item => item.shapeTypeId));
-
-    console.log(uniqueShapeTypes);
 
     if(patterns.length === 0) {
-        for (let i = 0; i < totalPatterns; i++) {
-            patterns.push({ pattern: `${i+1}`, firstElementID: Array.from(uniqueShapeTypes)[i * 2], secondElementID: Array.from(uniqueShapeTypes)[i * 2 + 1] });
-        }
+        console.log('createPairs called!');
 
+        shuffleGrid(shapeGrid);
+    
+        const shapes = shapeGrid.filter(item => item.shapeTypeId !== 'null');
+    
+        const uniqueShapeTypes = new Set(shapes.map(item => item.shapeTypeId));
+    
+        console.log(uniqueShapeTypes);
+
+        for (let i = 0; i < totalPatterns; i++) {
+            patterns.push({ pattern: `${i+1}`, firstElementID: Array.from(uniqueShapeTypes)[i * 2], secondElementID: Array.from(uniqueShapeTypes)[i * 2 + 1], fruitProducedByID: 'null'});
+        }
         initializeItems();
+    } else {
+
+        console.log('Items are already Initialized!.');
     }
 
     //console.log(patterns);
@@ -133,9 +257,13 @@ const createPairs = (shapeGrid) => {
   
 
 const initializeItems = () => {
+   // console.log("initialize Items called!.");
 
     if(patterns.length!=0) {
+        
+        updateCurrentTrial();
 
+      //  console.log(getCurrentTrial());
         for(let i = 0; i<patterns.length; i++) {
 
             for(let j =0; j<shapeGrid.length; j++) {
@@ -144,7 +272,7 @@ const initializeItems = () => {
 
                     case '1':
 
-                        if(patterns[i].firstElementID == shapeGrid[j].shapeTypeId || patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
+                        if(patterns[i].firstElementID === shapeGrid[j].shapeTypeId || patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
                              
                             shapeGrid[j].pattern = '1'
                             shapeGrid[j].producedFruit = false;
@@ -155,14 +283,15 @@ const initializeItems = () => {
                     
                     case '2':
 
-                        if(patterns[i].firstElementID == shapeGrid[j].shapeTypeId ) {
+                        if(patterns[i].firstElementID === shapeGrid[j].shapeTypeId ) {
                              
                             shapeGrid[j].pattern = '2';
                             shapeGrid[j].producedFruit = true;
                             shapeGrid[j].fruit = 'Apple';
+                            patterns[i].fruitProducedByID = patterns[i].firstElementID;
                         }
 
-                        if(patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
+                        if(patterns[i].secondElementID === shapeGrid[j].shapeTypeId) {
 
                             shapeGrid[j].pattern = '2';
                         }
@@ -171,14 +300,15 @@ const initializeItems = () => {
                     
                     case '3':
 
-                        if(patterns[i].firstElementID == shapeGrid[j].shapeTypeId ) {
+                        if(patterns[i].firstElementID === shapeGrid[j].shapeTypeId ) {
                              
                             shapeGrid[j].pattern = '3';
                             shapeGrid[j].producedFruit = true;
                             shapeGrid[j].fruit = 'Pear';
+                            patterns[i].fruitProducedByID = patterns[i].firstElementID;
                         }
 
-                        if(patterns[i].secondElementID == shapeGrid[j].shapeTypeId) {
+                        if(patterns[i].secondElementID === shapeGrid[j].shapeTypeId) {
 
                             shapeGrid[j].pattern = '3';
                         }
@@ -206,5 +336,10 @@ getShapeGrid,
 updateGrid,
 getFruitCount,
 updateFruitCount,
-getTotalFruits
+getTotalFruits,
+initializeFruitCount,
+updateCurrentTrial,
+getCurrentTrial,
+updatePatterns,
+getTotalTrials
 };

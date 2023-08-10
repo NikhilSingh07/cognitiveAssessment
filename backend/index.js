@@ -1,5 +1,5 @@
 const express = require('express')
-const { patterns, shapeGrid, shuffleGrid, createPairs, getPatterns, getShapeGrid, updateGrid, getFruitCount, updateFruitCount, getTotalFruits } = require('./shapeGrid');
+const { patterns, shapeGrid, shuffleGrid, createPairs, getPatterns, getShapeGrid, updateGrid, getFruitCount, getTotalFruits, initializeFruitCount, updateCurrentTrial, getCurrentTrial, updatePatterns, getTotalTrials } = require('./shapeGrid');
 const app = express()
 const port = 3000
 
@@ -34,7 +34,17 @@ app.get('/getPatterns', (req, res) => {
 
 
   console.log(getPatterns());
-  res.json(getPatterns());  
+  if(getPatterns().length != 0) {
+    res.json({
+      "Trial": getCurrentTrial(),
+      "Patterns": getPatterns()
+    }); 
+  } else {
+    res.json({
+      "status": "Items not Initialized yet!."
+    });
+  }
+   
 })
 
 
@@ -59,6 +69,35 @@ app.post('/clickedItem', (req, res) => {
 
     res.json({"status": 'User has found all the fruits in given Trial!.'});
   }
+
+
+});
+
+
+app.post('/next-trial', (req, res) => {
+
+    updateCurrentTrial();
+
+    if(getCurrentTrial() <= getTotalTrials()) {
+
+      if(getFruitCount() == getTotalFruits()) {
+
+        initializeFruitCount();
+        updatePatterns();
+        shuffleGrid(shapeGrid);
+  
+        res.json(getShapeGrid());
+  
+      } else {
+  
+        res.json({
+          "status": "Previous trial isn't completed yet!."
+        });
+      }
+
+    } else {
+      res.json({"status": "Game Over!."});
+    }
 
 
 });
