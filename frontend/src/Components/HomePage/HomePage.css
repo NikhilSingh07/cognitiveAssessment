@@ -1,0 +1,14 @@
+/* Basic styling for the entire page */
+.HomePage {
+    font-family: Arial, sans-serif;
+}
+
+.instructions {
+    text-align: center;
+    font-size: x-large;
+}
+  
+.nextbutton {
+    text-align: center;
+    font-size: large;
+}
