@@ -1,0 +1,24 @@
+{
+  "total trails": 3,
+  "current trial": 1,
+  "patterns": [
+    {
+      "pattern": "1",
+      "firstElementID": "3",
+      "secondElementID": "1",
+      "fruitProducedByID": "null"
+    },
+    {
+      "pattern": "2",
+      "firstElementID": "5",
+      "secondElementID": "6",
+      "fruitProducedByID": "5"
+    },
+    {
+      "pattern": "3",
+      "firstElementID": "4",
+      "secondElementID": "2",
+      "fruitProducedByID": "4"
+    }
+  ]
+}
