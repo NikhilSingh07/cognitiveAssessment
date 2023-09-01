@@ -4,25 +4,24 @@ body {
 
 #grid {
   display: grid;
-  grid-template-columns: repeat(5, 100px);
+  grid-template-columns: repeat(5, 120px);
   gap: 10px;
   margin: 20px auto;
 }
 
 .cell {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  background-color: #2f2f2f;
+  /* background-color: #2f2f2f; */
   cursor: pointer;
-  border: 1px solid #ccc;
 }
 
 .cell:hover {
-  background-color: #8c8c8c;
+  /* background-color: #8c8c8c; */
 }
 
 .alert {
@@ -38,5 +37,5 @@ body {
 .fruit-label {
   margin-top: 5px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 2rem;
 }
