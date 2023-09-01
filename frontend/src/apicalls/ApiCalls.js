@@ -15,9 +15,9 @@ export async function getInitialItems() {
     }
   }
 
-  export async function postClicked(shapeID) {
+  export async function postClicked(clickData) {
     if (process.env.NODE_ENV === "development") {
-      console.log({shapeID})
+      console.log({clickData})
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(newData);
@@ -25,7 +25,8 @@ export async function getInitialItems() {
       });
     } else {
       let headers = {
-        shapeID : shapeID
+        shapeID : clickData.shape,
+        time : clickData.time
       }
       const response = await axiosinstance.post(`/clickedItem`, headers );
       return response;

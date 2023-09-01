@@ -22,7 +22,12 @@ const Game = () => {
   }
 
   async function postClickedItem(shapeID){
-    const response = await postClicked(shapeID)
+    let event = new Date();
+    let clickEvent = {
+      shape: shapeID,
+      time: event.toString()
+    }
+    const response = await postClicked(clickEvent)
     console.log({response})
 
     const newGrid = [...response.shapeGrid];
