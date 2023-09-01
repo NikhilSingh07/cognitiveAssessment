@@ -1,31 +1,58 @@
+//const shapeGrid = require('../models/gameModel');
+//const patterns = require('../models/gamePattern');
+const trialModel= require('../models/trialModel');
 const shapeGrid = require('../models/gameModel');
-const patterns = require('../models/gamePattern');
 const {getTotalPatterns, updateCurrentTrial, updateFruitCount, getCurrentTrial} = require('../utils/gameUtils')
 
 // TC: O(n)
 // SC: O(m)
 
-const createPairs = (shapeGrid) => {
+const createPairs = async(req, res, trial_date, trial_number, trial_start_timestamp, trial_end_timestamp, trial_status, user_id) => {
   
+    const shapeGrid = req.body.shapeGrid;
+    const patterns = req.body.patterns;
+    let currentTrial = req.body.currentTrial;
+    let fruitCount = req.fruitCount;
+    let trial_id = 0;
+
+
     if(patterns.length === 0) {
-        console.log('createPairs called!');
+       // console.log('createPairs called!');
 
-        shuffleGrid(shapeGrid);
-    
-        const shapes = shapeGrid.filter(item => item.shapeTypeId !== 'null');
-    
-        const uniqueShapeTypes = new Set(shapes.map(item => item.shapeTypeId));
-    
-        console.log(uniqueShapeTypes);
+       //saing the data in the database
+        trial_id = await trialModel(trial_date, trial_number, trial_start_timestamp, trial_end_timestamp, trial_status, user_id);
 
-        for (let i = 0; i < getTotalPatterns(); i++) {
-            patterns.push({ pattern: `${i+1}`, firstElementID: Array.from(uniqueShapeTypes)[i * 2], secondElementID: Array.from(uniqueShapeTypes)[i * 2 + 1], fruitProducedByID: 'null'});
+        if(trial_id !== 0) {
+
+            shuffleGrid(req);
+    
+            const shapes = shapeGrid.filter(item => item.shapeTypeId !== 'null');
+        
+            const uniqueShapeTypes = new Set(shapes.map(item => item.shapeTypeId));
+        
+            console.log(uniqueShapeTypes);
+    
+            for (let i = 0; i < getTotalPatterns(); i++) {
+                patterns.push({ pattern: `${i+1}`, firstElementID: Array.from(uniqueShapeTypes)[i * 2], secondElementID: Array.from(uniqueShapeTypes)[i * 2 + 1], fruitProducedByID: 'null'});
+            }
+            currentTrial = initializeItems(req, res);
+            shuffleGrid(req);
+           // console.log("currentrial: "+currentTrial);
+    
+            res.json({message: 'Items initialized sucessfully!.', trial_id: trial_id, currentTrial: currentTrial, fruitCount: fruitCount, shapeGrid: shapeGrid, patterns: patterns});
+    
+
+        } else {
+    
+          console.log("some error happened at database, trail id is 0");
+          res.json({message: "some error happedned at the database"});
         }
-        initializeItems();
-        shuffleGrid(shapeGrid);
+
+
     } else {
 
         console.log('Items are already Initialized!.');
+        res.json({messgae: 'Items are already Initialized!.'});
     }
 
 };
@@ -34,7 +61,9 @@ const createPairs = (shapeGrid) => {
 //Space complexity: O(1), no extra memeory is used.
 // Fisher Yates algorithm
 
-const shuffleGrid = (shapeGrid) => {
+const shuffleGrid = (req) => {
+
+    const shapeGrid = req.body.shapeGrid;
 
     for (var i = shapeGrid.length-1; i>0; i--) {       
 
@@ -48,12 +77,18 @@ const shuffleGrid = (shapeGrid) => {
 }
   
 
-const initializeItems = () => {
+const initializeItems = (req, res) => {
    // console.log("initialize Items called!.");
+
+   const shapeGrid = req.body.shapeGrid;
+   const patterns = req.body.patterns;
+   let currentTrial = req.body.currentTrial;
 
     if(patterns.length!=0) {
         
-        updateCurrentTrial();
+       // updateCurrentTrial();
+       currentTrial =currentTrial+ 1;
+      // console.log("currentTrial"+currentTrial);
 
       //  console.log(getCurrentTrial());
         for(let i = 0; i<patterns.length; i++) {
@@ -110,22 +145,28 @@ const initializeItems = () => {
                 }
             }
 
-        }    
+        }   
+        
+        return currentTrial;
         
 
     } else {
         console.log('patterns not created yet!.');
+       // res.json({messgage: 'patterns not created yet!.'});
+
     }
 }
 
 
-const updatePatterns = () =>{
+const updatePatterns = (currentTrial, req, res) =>{
 
-    resetShapeGrid();
+    const patterns = req.body.patterns;
 
+    resetShapeGrid(req);
+    console.log("currentTrial: "+currentTrial);
     if(patterns.length > 0 ){
 
-        if(getCurrentTrial() % 2 !== 0) {
+        if(currentTrial % 2 !== 0) {
 
             console.log(patterns);   
 
@@ -141,7 +182,7 @@ const updatePatterns = () =>{
                         pattern.fruitProducedByID = pattern.firstElementID;
                     }
 
-                  updateShapeGrid(pattern.fruitProducedByID, "Pear");
+                  updateShapeGrid(req, pattern.fruitProducedByID, "Pear");
                 }
     
                 if(pattern.pattern === "2") {
@@ -155,7 +196,7 @@ const updatePatterns = () =>{
                         pattern.fruitProducedByID = pattern.firstElementID;
                     }
 
-                   updateShapeGrid(pattern.fruitProducedByID, "Apple")
+                   updateShapeGrid(req, pattern.fruitProducedByID, "Apple")
                 }
               }
         } else {
@@ -176,7 +217,7 @@ const updatePatterns = () =>{
                           pattern.fruitProducedByID = pattern.secondElementID;
                       }
   
-                    updateShapeGrid(pattern.fruitProducedByID, "Pear");
+                    updateShapeGrid(req, pattern.fruitProducedByID, "Pear");
                   }
     
                 if(pattern.pattern === "2") {
@@ -189,13 +230,13 @@ const updatePatterns = () =>{
 
                         pattern.fruitProducedByID = pattern.firstElementID;
                     }
-                    updateShapeGrid(pattern.fruitProducedByID, "Apple");
+                    updateShapeGrid(req, pattern.fruitProducedByID, "Apple");
                 }
 
             }
         }
 
-        shuffleGrid(shapeGrid);
+        shuffleGrid(req);
 
     } else {
 
@@ -204,7 +245,9 @@ const updatePatterns = () =>{
 
 }
 
-const resetShapeGrid = () => {
+const resetShapeGrid = (req) => {
+
+    const shapeGrid = req.body.shapeGrid;
 
     shapeGrid.forEach(shape => {
         shape.producedFruit = false;
@@ -214,7 +257,9 @@ const resetShapeGrid = () => {
 }
 
  
-const updateShapeGrid = (fruitProducedByID, fruit) => {
+const updateShapeGrid = (req, fruitProducedByID, fruit) => {
+
+    const shapeGrid = req.body.shapeGrid;
 
     shapeGrid.forEach(shape => {
 
@@ -226,11 +271,23 @@ const updateShapeGrid = (fruitProducedByID, fruit) => {
 }
 
 
-const updateGrid = (shapeId) => {
+const updateGrid = (req) => {
        
+    const shapeGrid = req.body.shapeGrid;
+    const shapeId = String(req.body.clickedShapeId);
+    let fruitCount = req.body.fruitCount;
+
+
+   // console.log("Receibed shape:"+shapeGrid);
+    
+    // Log the value of shapeId to ensure it's correct
+   // console.log("Received shapeId:"+ shapeId);
+
     const clickedShape = shapeGrid.find(shape => shape.shapeId === shapeId);
 
-   // console.log("Clicked Shape:", clickedShape, "Shape ID:", shapeId);
+    // Log the contents of the clickedShape to see its properties
+   // console.log("Clicked Shape:", clickedShape);
+
     if(clickedShape) {
 
              if(clickedShape.shapeTypeId !== 'null') {
@@ -238,15 +295,25 @@ const updateGrid = (shapeId) => {
                 if (clickedShape.producedFruit && !clickedShape.hasProducedFruit) {
 
                     clickedShape.hasProducedFruit = true;
-                    updateFruitCount();
+                    //updateFruitCount();
+                    fruitCount = fruitCount + 1;
                 }
              }
 
-             shuffleGrid(shapeGrid);
+             shuffleGrid(req);
+
+             return fruitCount;
 
     } else {
         console.log("shape not found!");
+       // res.json({message: 'shape not found!'});
     }
+}
+
+const getItemPosition = (shapeGrid, shapeId) =>{
+
+    const itemIndex = shapeGrid.findIndex(shape => shape.shapeId === shapeId);
+    return itemIndex;
 }
 
 
@@ -256,6 +323,7 @@ module.exports = {
 shuffleGrid,
 createPairs,
 updateGrid,
-updatePatterns
+updatePatterns,
+getItemPosition
 
 };

@@ -1,6 +1,5 @@
 const patterns = require("../models/gamePattern");
 const shapeGrid = require('../models/gameModel')
-
 const totalTrials = 6;
 const totalPatterns = 3;
 let fruitsCounter = 0;

@@ -1,3 +1,6 @@
+const shapeGrid = require('../models/gameModel');
+const patterns = require('../models/gamePattern');
+const {getFruitCount, getCurrentTrial}  = require('../utils/gameUtils');
 const pool = require('../database/database');
 const jwt = require('jsonwebtoken');
 const path = require("path"); 
@@ -10,22 +13,29 @@ const registerUser = async (req, res) =>{
     try{
         console.log(req.body);
         
-        const { age, sex, ethnicity, highest_qualification, device_information, handedness } = req.body;
+        const { dob, sex,qualifications, language_proficiency, vision, handedness, country, city, ethnicity,  device_information, disability} = req.body;
 
-        if (
-            age !== undefined && typeof age === "number" && age > 0 &&
-            sex !== undefined && typeof sex === "string" && sex.trim() !== "" &&
-            ethnicity !== undefined && typeof ethnicity === "string" && ethnicity.trim() !== "" &&
-            highest_qualification !== undefined && typeof highest_qualification === "string" && highest_qualification.trim() !== "" &&
-            device_information !== undefined && typeof device_information === "string" && device_information.trim() !== "" &&
-            handedness !== undefined && typeof handedness == "string" && handedness.trim() !== ""
-        ) {
+// Parse the dob string into a Date object
+const parsedDob = new Date(dob);
 
-            const {age, sex, ethnicity, highest_qualification, device_information, handedness} = req.body;
-            const newUser = await pool.query(
-                "INSERT INTO users (age, sex, ethnicity, highest_education, device_information, handedness) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-                [age, sex, ethnicity, highest_qualification, device_information, handedness]
-            );
+if (
+    parsedDob !== undefined && parsedDob instanceof Date && !isNaN(parsedDob.getTime()) &&
+    sex !== undefined && typeof sex === "string" && sex.trim() !== "" &&
+    qualifications !== undefined && typeof qualifications === "string" && qualifications.trim() !== "" &&
+    language_proficiency !== undefined && typeof language_proficiency === "string" && language_proficiency.trim() !== "" &&
+    vision !== undefined && typeof vision === "string" && vision.trim() !== "" &&
+    handedness !== undefined && typeof handedness === "string" && handedness.trim() !== "" &&
+    country !== undefined && typeof country === "string" && country.trim() !== "" &&
+    city !== undefined && typeof city === "string" && city.trim() !== "" &&
+    ethnicity !== undefined && typeof ethnicity === "string" && ethnicity.trim() !== "" &&
+    device_information !== undefined && typeof device_information === "string" && device_information.trim() !== "" &&
+    disability !== undefined && typeof disability === "string" && disability.trim() !== ""
+) {
+    const { dob, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability } = req.body;
+    const newUser = await pool.query(
+        "INSERT INTO users (dob, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
+        [parsedDob, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability]
+    );
 
     
         const user_id = newUser.rows[0].user_id;
@@ -33,7 +43,7 @@ const registerUser = async (req, res) =>{
                     user_id: user_id });*/
 
         const accessToken = generateAccessToken(user_id);  
-        res.json({message: "User registration and auto Login succesful", accessToken: accessToken});
+        res.json({message: "User registration and auto login succesful", accessToken: accessToken, shapeGrid: shapeGrid, patterns: patterns, fruitCount: getFruitCount(), currentTrial: getCurrentTrial()});
 
 
         } else {

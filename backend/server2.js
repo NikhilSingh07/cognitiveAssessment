@@ -1,13 +1,11 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const app = express();
-const port = 3000;
+const port = 4000;
 
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes= require('./routes/userRoutes');
 
 app.use(express.json());
-app.use(cookieParser());
 
 app.use('/assessment/', gameRoutes);
 app.use('/user/', userRoutes);
