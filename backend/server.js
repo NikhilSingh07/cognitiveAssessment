@@ -7,9 +7,10 @@ const port = 3000;
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes= require('./routes/userRoutes');
 
-app.use(cors);
 app.use(express.json());
 app.use(cookieParser());
+
+//app.use(cors);
 
 app.use('/assessment/', gameRoutes);
 app.use('/user/', userRoutes);
