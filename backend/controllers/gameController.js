@@ -1,7 +1,8 @@
 
-const {createPairs, updateGrid, updatePatterns, getItemPosition}= require('./gridController');
+const {createPairs, updateGrid, updatePatterns, getItemPosition, getShapeDetails}= require('./gridController');
 const {getPatterns, getTotalTrials, getCurrentTrial, getShapeGrid, getFruitCount, getTotalFruits, updateCurrentTrial, initializeFruitCount} = require('../utils/gameUtils');
 const trialModel = require('../models/trialModel');
+const clickModel = require('../models/clickModel');
 
 
 const initializeItems = (req, res) => {
@@ -83,57 +84,93 @@ const getGamePatterns = (req, res) => {
 };
 
 const itemClicked = (req, res) => {
-
+  
+    const user_id = req.user_id;
+    const trial_id = req.body.trial_id;
+    let click_number = req.body.click_number;
     const shapeGrid = req.body.shapeGrid;
     const patterns = req.body.patterns;
     let fruitCount= req.body.fruitCount;
     const shapeId = req.body.clickedShapeId;
     const currentTrial= req.body.currentTrial;
 
+
    // console.log(shapeId);
     
     if(patterns.length != 0) {
 
 
-        if(fruitCount < getTotalFruits()) {
-
-           // console.log('Received request body:', req.body);
-            
-            //const shapeId = req.body.clickedShapeId;
-            
-            const shapeId = String(req.body.clickedShapeId);
-            const clickedIndex = getItemPosition(shapeGrid, shapeId);
-
-            console.log("clickedIndex:" +clickedIndex);
-            const totalColumns = 5;
-            const rowIndex = Math.floor(clickedIndex / totalColumns);
-            const columnIndex = clickedIndex % totalColumns;
-
-            console.log("index:"+clickedIndex+"row index: "+rowIndex+ ", column index: "+ columnIndex);
-
-
-            fruitCount = updateGrid(req);
-
-            if(fruitCount == getTotalFruits()) {
-              res.json({"status": 'User has found all the fruits in given Trial!.', "fruitCount": fruitCount});
-            } else {
-
-
-            //shuffleGrid(shapeGrid);
-           // console.log(getShapeGrid);
-            res.json({
-              currentTrial: currentTrial,
-              fruitCount: fruitCount,
-              shapeGrid: shapeGrid
-            });
-            }
-
+      if (
+        trial_id !== undefined && trial_id !== null && trial_id !== "" &&
+        click_number !== undefined && click_number !== null && click_number !== "" &&
+        shapeGrid !== undefined && shapeGrid !== null && shapeGrid.length !==0 &&
+        patterns !== undefined && patterns !== null && patterns.length !== 0 &&
+        fruitCount !== undefined && fruitCount !== null && fruitCount !== "" &&
+        shapeId !== undefined && shapeId !== null && shapeId !== "" &&
+        currentTrial !== undefined && currentTrial !== null && currentTrial !== ""
         
-          } else {
-        
-            res.json({"status": 'User has found all the fruits in given Trial!.',  "fruitCount": fruitCount});
-          }
+        ) {
 
+          if(fruitCount < getTotalFruits()) {
+
+            // console.log('Received request body:', req.body);
+             
+             //const shapeId = req.body.clickedShapeId;
+             
+             const shapeId = String(req.body.clickedShapeId);
+             const clickedIndex = getItemPosition(shapeGrid, shapeId);
+ 
+            // console.log("clickedIndex:" +clickedIndex);
+             const totalColumns = 5;
+             const rowIndex = Math.floor(clickedIndex / totalColumns);
+             const columnIndex = clickedIndex % totalColumns;
+ 
+         //    console.log("index:"+clickedIndex+"row index: "+rowIndex+ ", column index: "+ columnIndex);
+ 
+ 
+             const fruitDetails = updateGrid(req);
+
+             fruitCount= fruitDetails[1];
+             fruit = fruitDetails[0];
+
+             const shapeDetails = getShapeDetails(req);
+          //   console.log("shapeType: "+shapeDetails[0], "shapeSize: "+shapeDetails[1], "fruit: "+fruit);
+
+
+             click_number +=1;
+
+             clickModel(user_id, trial_id,shapeId, fruit, click_number, rowIndex, columnIndex );
+ 
+             if(fruitCount == getTotalFruits()) {
+               res.json({"status": 'User has found all the fruits in given Trial!.', "fruitCount": fruitCount});
+             } else {
+ 
+
+             
+ 
+             //shuffleGrid(shapeGrid);
+            // console.log(getShapeGrid);
+             res.json({
+               trial_id: trial_id,
+               click_number: click_number,
+               currentTrial: currentTrial,
+               fruitCount: fruitCount,
+               shapeGrid: shapeGrid
+             });
+             }
+ 
+         
+           } else {
+         
+             res.json({"status": 'User has found all the fruits in given Trial!.',  "fruitCount": fruitCount});
+           }
+
+
+      } else {
+
+        console.log("req body is incomplete.");
+        res.json({message: "request body is incomplete"});
+      }
 
     } else {
         res.json({
