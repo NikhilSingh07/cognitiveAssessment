@@ -11,7 +11,12 @@ export async function getInitialItems() {
     //   });
     // } else 
     {
-      const response = await axiosinstance.get(`/initializeItems`);
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const response = await fetch('https://localhost:3000/initializeItems', requestOptions)
+        .then((resp) => {return resp.json()})
       return response;
     }
   }
@@ -40,8 +45,7 @@ export async function getInitialItems() {
         device_information: "laptop",
         disability: formData.disability
       }
-      const response = await axiosinstance.get(`/assessment/testing` );
-      console.log(response);
+      const response = await axiosinstance.post(`/assessment/testing`, headers );
       return response;
     }
   } 
