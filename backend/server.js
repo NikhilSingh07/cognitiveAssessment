@@ -10,7 +10,7 @@ const userRoutes= require('./routes/userRoutes');
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors);
+
 
 app.use('/assessment/', gameRoutes);
 app.use('/user/', userRoutes);
