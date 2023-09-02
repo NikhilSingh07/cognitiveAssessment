@@ -2,6 +2,8 @@ import axiosinstance from "./AxiosInstance";
 import initialData from "../Mock/InitializeItems.json"
 import newData from "../Mock/clickedItems.json"
 
+
+
 export async function getInitialItems() {
     // if (process.env.NODE_ENV === "development") {
     //   return new Promise((resolve) => {
@@ -21,8 +23,11 @@ export async function getInitialItems() {
     }
   }
 
+
+
   export async function postFormData(formData) {
-    // if (process.env.NODE_ENV === "development") {
+
+        // if (process.env.NODE_ENV === "development") {
     //   console.log({clickData})
     //   return new Promise((resolve) => {
     //     setTimeout(() => {
@@ -31,27 +36,40 @@ export async function getInitialItems() {
     //   });
     // } 
     // else 
-    {
-      let headers = {
-        dob: formData.dateOfBirth,
-        sex: formData.sex,
-        qualifications: formData.qualifications,
-        language_proficiency: formData.languageProficiency,
-        vision: formData.vision,
-        handedness: formData.handedness,
-        country: formData.country,
-        city: formData.city,
-        ethnicity: formData.ethnicity,
-        device_information: "laptop",
-        disability: formData.disability
-      }
-      const response = await axiosinstance.post(`/assessment/testing`, headers );
-      return response;
-    }
-  } 
 
-
+       // let headers = {
+      //   dob: formData.dateOfBirth,
+      //   sex: formData.sex,
+      //   qualifications: formData.qualifications,
+      //   language_proficiency: formData.languageProficiency,
+      //   vision: formData.vision,
+      //   handedness: formData.handedness,
+      //   country: formData.country,
+      //   city: formData.city,
+      //   ethnicity: formData.ethnicity,
+      //   device_information: "laptop",
+      //   disability: formData.disability
+      // }
+    try {
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const response = await fetch('http://localhost:3000/assessment/testing', requestOptions);
   
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } catch (error) {
+      console.error('An error occurred:', error.message);
+      throw error; // You can choose to rethrow the error or handle it differently.
+    }
+  }
+
 
   export async function postClicked(clickData) {
     // if (process.env.NODE_ENV === "development") {
