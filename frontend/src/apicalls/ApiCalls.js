@@ -11,7 +11,12 @@ export async function getInitialItems() {
     //   });
     // } else 
     {
-      const response = await axiosinstance.get(`/initializeItems`);
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const response = await fetch('https://localhost:3000/initializeItems', requestOptions)
+        .then((resp) => {return resp.json()})
       return response;
     }
   }
@@ -27,20 +32,25 @@ export async function getInitialItems() {
     // } 
     // else 
     {
-      let headers = {
-        dob: formData.dateOfBirth,
-        sex: formData.sex,
-        qualifications: formData.qualifications,
-        language_proficiency: formData.languageProficiency,
-        vision: formData.vision,
-        handedness: formData.handedness,
-        country: formData.country,
-        city: formData.city,
-        ethnicity: formData.ethnicity,
-        device_information: "laptop",
-        disability: formData.disability
-      }
-      const response = await axiosinstance.post(`/assessment/testing`, headers );
+      // let headers = {
+      //   dob: formData.dateOfBirth,
+      //   sex: formData.sex,
+      //   qualifications: formData.qualifications,
+      //   language_proficiency: formData.languageProficiency,
+      //   vision: formData.vision,
+      //   handedness: formData.handedness,
+      //   country: formData.country,
+      //   city: formData.city,
+      //   ethnicity: formData.ethnicity,
+      //   device_information: "laptop",
+      //   disability: formData.disability
+      // }
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const response = await fetch('https://localhost:3000/assessment/testing', requestOptions)
+        .then((resp) => { console.log({resp});return resp.json()})
       return response;
     }
   } 
