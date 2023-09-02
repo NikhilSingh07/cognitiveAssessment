@@ -1,11 +1,13 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes= require('./routes/userRoutes');
 
+app.use(cors);
 app.use(express.json());
 app.use(cookieParser());
 

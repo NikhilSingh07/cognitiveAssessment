@@ -14,6 +14,7 @@ const createPairs = async(req, res, trial_date, trial_number, trial_start_timest
     let currentTrial = req.body.currentTrial;
     let fruitCount = req.fruitCount;
     let trial_id = 0;
+    const click_number = 0;
 
 
     if(patterns.length === 0) {
@@ -39,7 +40,7 @@ const createPairs = async(req, res, trial_date, trial_number, trial_start_timest
             shuffleGrid(req);
            // console.log("currentrial: "+currentTrial);
     
-            res.json({message: 'Items initialized sucessfully!.', trial_id: trial_id, currentTrial: currentTrial, fruitCount: fruitCount, shapeGrid: shapeGrid, patterns: patterns});
+            res.json({message: 'Items initialized sucessfully!.', trial_id: trial_id, click_number: click_number, currentTrial: currentTrial, fruitCount: fruitCount, shapeGrid: shapeGrid, patterns: patterns});
     
 
         } else {
@@ -277,6 +278,9 @@ const updateGrid = (req) => {
     const shapeId = String(req.body.clickedShapeId);
     let fruitCount = req.body.fruitCount;
 
+    const fruitDetails = [];
+    let fruit = '';
+
 
    // console.log("Receibed shape:"+shapeGrid);
     
@@ -297,12 +301,19 @@ const updateGrid = (req) => {
                     clickedShape.hasProducedFruit = true;
                     //updateFruitCount();
                     fruitCount = fruitCount + 1;
+                    fruit = clickedShape.fruit;
+                } else {
+
+                    fruit = 'no fruit';
                 }
+
+
+                fruitDetails.push(fruit, fruitCount);
              }
 
              shuffleGrid(req);
 
-             return fruitCount;
+             return fruitDetails;
 
     } else {
         console.log("shape not found!");
@@ -316,6 +327,26 @@ const getItemPosition = (shapeGrid, shapeId) =>{
     return itemIndex;
 }
 
+const getShapeDetails = (req) => {
+
+
+    const shapeDetails = [];
+    const shapeGrid = req.body.shapeGrid;
+    const shapeId = String(req.body.clickedShapeId);
+    
+    const clickedShape = shapeGrid.find(shape => shape.shapeId === shapeId);
+
+    if(clickedShape) {
+
+        if(clickedShape.shapeTypeId !== 'null') {
+
+            shapeDetails.push(clickedShape.shapeType, clickedShape.shapeSize);
+
+        }
+        return shapeDetails;
+    } 
+}
+
 
 
 module.exports = {
@@ -324,6 +355,6 @@ shuffleGrid,
 createPairs,
 updateGrid,
 updatePatterns,
-getItemPosition
-
+getItemPosition,
+getShapeDetails
 };
