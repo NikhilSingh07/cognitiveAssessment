@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {initializeItems, getGamePatterns, itemClicked, nextTrial, getGridModel} = require('../controllers/gameController');
+const {initializeItems, getGamePatterns, itemClicked, nextTrial, getGridModel, testing} = require('../controllers/gameController');
 const protect = require('../middleware/authMiddleware');
 
 
@@ -20,6 +20,8 @@ router.route('/clickedItem').post(protect, itemClicked);
 router.route('/next-trial').post(protect, nextTrial);
 
 //router.route('/getGridModel').get(protect, getGridModel);
+
+router.route('/testing').get(testing);
 
 module.exports = router;
 

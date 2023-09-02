@@ -5,6 +5,11 @@ const trialModel = require('../models/trialModel');
 const clickModel = require('../models/clickModel');
 
 
+const testing = (req, res) => {
+
+  res.json({message: "hello from server"});
+}
+
 const initializeItems = (req, res) => {
   
 
@@ -85,6 +90,8 @@ const getGamePatterns = (req, res) => {
 
 const itemClicked = (req, res) => {
   
+  console.log("itemClicked called.");
+
     const user_id = req.user_id;
     const trial_id = req.body.trial_id;
     let click_number = req.body.click_number;
@@ -134,7 +141,7 @@ const itemClicked = (req, res) => {
              fruit = fruitDetails[0];
 
              const shapeDetails = getShapeDetails(req);
-          //   console.log("shapeType: "+shapeDetails[0], "shapeSize: "+shapeDetails[1], "fruit: "+fruit);
+            console.log("shapeType: "+shapeDetails[0], "shapeSize: "+shapeDetails[1], "fruit: "+fruit);
 
 
              click_number +=1;
@@ -215,4 +222,4 @@ const nextTrial = (req, res) =>{
 
 };
 
-module.exports = {initializeItems, getGamePatterns, itemClicked, nextTrial};
+module.exports = {initializeItems, getGamePatterns, itemClicked, nextTrial, testing};
