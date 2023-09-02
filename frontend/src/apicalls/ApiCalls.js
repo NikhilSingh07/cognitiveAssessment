@@ -40,10 +40,14 @@ export async function getInitialItems() {
         device_information: "laptop",
         disability: formData.disability
       }
-      const response = await axiosinstance.post(`/assessment/testing`, headers );
+      const response = await axiosinstance.get(`/assessment/testing` );
+      console.log(response);
       return response;
     }
   } 
+
+
+  
 
   export async function postClicked(clickData) {
     // if (process.env.NODE_ENV === "development") {

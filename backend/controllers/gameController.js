@@ -7,6 +7,7 @@ const clickModel = require('../models/clickModel');
 
 const testing = (req, res) => {
 
+  console.log("testing called");
   res.json({message: "hello from server"});
 }
 

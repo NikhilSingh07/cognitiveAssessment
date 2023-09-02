@@ -21,7 +21,7 @@ router.route('/next-trial').post(protect, nextTrial);
 
 //router.route('/getGridModel').get(protect, getGridModel);
 
-router.route('/testing').post(testing);
+router.route('/testing').get(testing);
 
 module.exports = router;
 
