@@ -1,7 +1,7 @@
 
 const {createPairs, updateGrid, updatePatterns, getItemPosition, getShapeDetails}= require('./gridController');
 const {getPatterns, getTotalTrials, getCurrentTrial, getShapeGrid, getFruitCount, getTotalFruits, updateCurrentTrial, initializeFruitCount} = require('../utils/gameUtils');
-const trialModel = require('../models/trialModel');
+const {trialModel, updateTrialModel} = require('../models/trialModel');
 const clickModel = require('../models/clickModel');
 
 
@@ -22,7 +22,7 @@ const initializeItems = (req, res) => {
    //const trial_start_timestamp = new Date(trial_start_timestamp_string);
    const trial_end_timestamp =  "null";
    //const trial_end_timestamp =  new Date(trial_end_timestamp_string)
-   const trial_status = "Ongoing";
+   const trial_status = "ongoing";
 
    const user_id= req.user_id;
 
@@ -141,7 +141,7 @@ const itemClicked = (req, res) => {
              fruitCount= fruitDetails[1];
              fruit = fruitDetails[0];
 
-             const shapeDetails = getShapeDetails(req);
+            const shapeDetails = getShapeDetails(req);
             console.log("shapeType: "+shapeDetails[0], "shapeSize: "+shapeDetails[1], "fruit: "+fruit);
 
 
@@ -191,35 +191,66 @@ const itemClicked = (req, res) => {
 };
 
 
-const nextTrial = (req, res) =>{
+const nextTrial = async (req, res) =>{
+
+
+  const trial_date =  "2023-09-01";  //DUMMY
+  const trial_start_timestamp = "null";   
+  //const trial_start_timestamp = new Date(trial_start_timestamp_string);
+  const trial_end_timestamp =  "2023-09-01 10:00:00";   //DUMMY
+  //const trial_end_timestamp =  new Date(trial_end_timestamp_string)
+  const trial_status = "completed"; 
 
     const shapeGrid = req.body.shapeGrid;
     const patterns = req.body.patterns;
     let fruitCount = req.body.fruitCount;
     let currentTrial= req.body.currentTrial;
+    let trial_id = req.body.trial_id;
+    const user_id = req.user_id;
+
+    if (
+      trial_id !== undefined && trial_id !== null && trial_id !== "" &&
+      shapeGrid !== undefined && shapeGrid !== null && shapeGrid.length !==0 &&
+      patterns !== undefined && patterns !== null && patterns.length !== 0 &&
+      fruitCount !== undefined && fruitCount !== null && fruitCount !== "" &&
+      currentTrial !== undefined && currentTrial !== null && currentTrial !== ""  
+      ) {
+
+        if(fruitCount == getTotalFruits()) {
+          //updateCurrentTrial();
+          currentTrial += 1;
+  
+          if(currentTrial <= getTotalTrials()) {
+              
+              //initializeFruitCount();
+              fruitCount = 0;
+  
+              updatePatterns(currentTrial, req, res);
+              trial_id=  await updateTrialModel(trial_id, trial_date, currentTrial, trial_end_timestamp, trial_status, user_id);
+              //console.log("new Trial id: "+trial_id);
+              res.json({trial_id, currentTrial, fruitCount, shapeGrid, patterns});
+  
+          } else {
+              
+              
+              res.json({"status": "Game Over!."});
+          }
+  
+      } else {
+          res.json({
+              "status": "Previous trial isn't completed yet!."
+            });
+  
+      }
+
+      } else {
+        console.log("req body is incomplete.");
+        res.json({message: "request body is incomplete"});
+        
+      }
+
     
-    if(fruitCount == getTotalFruits()) {
-        //updateCurrentTrial();
-        currentTrial += 1;
 
-        if(currentTrial <= getTotalTrials()) {
-            
-            //initializeFruitCount();
-            fruitCount = 0;
-
-            updatePatterns(currentTrial, req, res);
-            res.json({currentTrial, fruitCount, shapeGrid, patterns});
-
-        } else {
-            res.json({"status": "Game Over!."});
-        }
-
-    } else {
-        res.json({
-            "status": "Previous trial isn't completed yet!."
-          });
-
-    }
 
 };
 
