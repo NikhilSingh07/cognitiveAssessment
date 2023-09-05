@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './FormPage.css';
 import { useHistory } from "react-router-dom";
-import { postFormData } from "../../apicalls/ApiCalls";
+import { postFormData, fetchData} from "../../apicalls/ApiCalls";
 
 const FormPage = () => {
     const [formData, setFormData] = useState({
@@ -31,7 +31,8 @@ const FormPage = () => {
         e.preventDefault();
         console.log(formData);
         postFormData(formData)
-        {history.push("/game")}
+     // fetchData();
+       // {history.push("/game")}
       };
 
     return(
