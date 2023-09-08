@@ -1,6 +1,6 @@
 //const shapeGrid = require('../models/gameModel');
 //const patterns = require('../models/gamePattern');
-const trialModel= require('../models/trialModel');
+const {trialModel}= require('../models/trialModel');
 const shapeGrid = require('../models/gameModel');
 const {getTotalPatterns, updateCurrentTrial, updateFruitCount, getCurrentTrial} = require('../utils/gameUtils')
 
@@ -115,7 +115,7 @@ const initializeItems = (req, res) => {
                              
                             shapeGrid[j].pattern = '2';
                             shapeGrid[j].producedFruit = true;
-                            shapeGrid[j].fruit = 'Apple';
+                            shapeGrid[j].fruit = 'apple';
                             patterns[i].fruitProducedByID = patterns[i].firstElementID;
                         }
 
@@ -132,7 +132,7 @@ const initializeItems = (req, res) => {
                              
                             shapeGrid[j].pattern = '3';
                             shapeGrid[j].producedFruit = true;
-                            shapeGrid[j].fruit = 'Pear';
+                            shapeGrid[j].fruit = 'pear';
                             patterns[i].fruitProducedByID = patterns[i].firstElementID;
                         }
 
@@ -183,7 +183,7 @@ const updatePatterns = (currentTrial, req, res) =>{
                         pattern.fruitProducedByID = pattern.firstElementID;
                     }
 
-                  updateShapeGrid(req, pattern.fruitProducedByID, "Pear");
+                  updateShapeGrid(req, pattern.fruitProducedByID, "pear");
                 }
     
                 if(pattern.pattern === "2") {
@@ -197,7 +197,7 @@ const updatePatterns = (currentTrial, req, res) =>{
                         pattern.fruitProducedByID = pattern.firstElementID;
                     }
 
-                   updateShapeGrid(req, pattern.fruitProducedByID, "Apple")
+                   updateShapeGrid(req, pattern.fruitProducedByID, "apple")
                 }
               }
         } else {
@@ -218,7 +218,7 @@ const updatePatterns = (currentTrial, req, res) =>{
                           pattern.fruitProducedByID = pattern.secondElementID;
                       }
   
-                    updateShapeGrid(req, pattern.fruitProducedByID, "Pear");
+                    updateShapeGrid(req, pattern.fruitProducedByID, "pear");
                   }
     
                 if(pattern.pattern === "2") {
@@ -231,7 +231,7 @@ const updatePatterns = (currentTrial, req, res) =>{
 
                         pattern.fruitProducedByID = pattern.firstElementID;
                     }
-                    updateShapeGrid(req, pattern.fruitProducedByID, "Apple");
+                    updateShapeGrid(req, pattern.fruitProducedByID, "apple");
                 }
 
             }
@@ -307,10 +307,11 @@ const updateGrid = (req) => {
                     fruit = 'no fruit';
                 }
 
-
-                fruitDetails.push(fruit, fruitCount);
+             } else {
+                fruit = 'no fruit';
              }
 
+             fruitDetails.push(fruit, fruitCount);
              shuffleGrid(req);
 
              return fruitDetails;
@@ -342,6 +343,8 @@ const getShapeDetails = (req) => {
 
             shapeDetails.push(clickedShape.shapeType, clickedShape.shapeSize);
 
+        } else {
+            shapeDetails.push('null', 'null');
         }
         return shapeDetails;
     } 
