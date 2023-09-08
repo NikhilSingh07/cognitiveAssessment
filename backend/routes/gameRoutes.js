@@ -5,7 +5,8 @@ const protect = require('../middleware/authMiddleware');
 
 
 
-/*  POST http://localhost:3000/assessment/initializeItems
+/*  
+    POST http://localhost:3000/assessment/initializeItems
 
     EXPECTING: TOKEN (in headers) 
                and below information in the JSON's request body.
@@ -95,6 +96,7 @@ router.route('/clickedItem').post(protect, itemClicked);
     2. shapeGrid (to be updated in the session storage)
     3. patterns (to be updated in the session storage)
     4. fruitCount (to be updated in the session storage)
+    5. click_number: (YET TO IMPLEMENT)
 
 */
 

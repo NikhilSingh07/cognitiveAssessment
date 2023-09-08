@@ -207,6 +207,7 @@ const nextTrial = async (req, res) =>{
     let currentTrial= req.body.currentTrial;
     let trial_id = req.body.trial_id;
     const user_id = req.user_id;
+    const click_number = 0;
 
     if (
       trial_id !== undefined && trial_id !== null && trial_id !== "" &&
@@ -228,7 +229,7 @@ const nextTrial = async (req, res) =>{
               updatePatterns(currentTrial, req, res);
               trial_id=  await updateTrialModel(trial_id, trial_date, currentTrial, trial_end_timestamp, trial_status, user_id);
               //console.log("new Trial id: "+trial_id);
-              res.json({trial_id, currentTrial, fruitCount, shapeGrid, patterns});
+              res.json({click_number, trial_id, currentTrial, fruitCount, shapeGrid, patterns});
   
           } else {
               
