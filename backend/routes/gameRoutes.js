@@ -101,7 +101,6 @@ router.route('/clickedItem').post(protect, itemClicked);
 router.route('/next-trial').post(protect, nextTrial);
 
 
-// THOUGHTS: to ceate a new trial_id (new record) for each trial. Done
 router.route('/testing').get(testing);
 
 module.exports = router;

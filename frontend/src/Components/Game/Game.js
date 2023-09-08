@@ -2,32 +2,70 @@ import React, { useEffect, useState } from 'react';
 import './Game.css';
 import { BsFillCircleFill, BsFillHexagonFill, BsFillSquareFill, BsFillStarFill, BsFillTriangleFill, BsFillDiamondFill } from 'react-icons/bs';
 import { getInitialItems, postClicked } from '../../apicalls/ApiCalls';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import JWTatom from '../../Recoil/Atoms/JWT';
+import ClickData from '../../Recoil/Atoms/ClickData';
 
 const Game = () => {
   const [grid, setGrid] = useState([]);
   const [showFruit, setShowFruit] = useState(false)
   const [clickIndex, setClickedIndex] = useState(null)
-  const [clicks, setClicks] = useState(0);
+  const [clickData, setClickData] = useRecoilState(ClickData)
+  const jwt = useRecoilValue(JWTatom)
 
   useEffect(() => {
     getInitial();
   }, []);
 
   async function getInitial(){
-    const response = await getInitialItems()
+    let event = new Date();
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+
+    const val = {
+      shapeGrid: clickData.shapeGrid,
+      patterns: clickData.patterns,
+      currentTrail: clickData.currentTrial,
+      fruitCount: clickData.fruitCount,
+      date: today.toDateString(),
+      timestamp: event.toString()
+    }
+    const response = await getInitialItems(jwt.token, val).then((resp) =>{
+      setClickData((prev) => ({
+        ...prev,
+        shapeGrid: resp.shapeGrid,
+        patterns: resp.patterns,
+        trialId: resp.trialId,
+        currentTrial: resp.currentTrial,
+        clickNumber: resp.click_number
+      }))
+    })
     console.log({response})
     
-    const newGrid = [...response];
+    const newGrid = [...response.shapeGrid];
     setGrid(newGrid);
   }
 
   async function postClickedItem(shapeID){
     let event = new Date();
     let clickEvent = {
-      shape: shapeID,
-      time: event.toString()
+      clickedShapeId: shapeID,
+      shapeGrid: clickData.shapeGrid,
+      trial_id: clickData.trialId,
+      patterns: clickData.patterns,
+      currentTrail: clickData.currentTrial,
+      fruitCount: clickData.fruitCount,
+      timestamp: event.toString(),
+      click_number: clickData.clickNumber
     }
-    const response = await postClicked(clickEvent)
+    const response = await postClicked(clickEvent, jwt.token).then((resp) => {
+      setClickData((prev) => ({
+        ...prev,
+        clickNumber: resp.click_number,
+        fruitCount: resp.fruitCount,
+        shapeGrid: resp.shapeGrid
+      }))
+    })
     console.log({response})
 
     const newGrid = [...response.shapeGrid];
@@ -38,7 +76,10 @@ const Game = () => {
 
   const revealFruit = (cell, index) => {
     if(cell.shapeType !== "null"){
-      setClicks(prev => prev + 1)
+      setClickData((prev) => ({
+        ...prev,
+        clickNumber: prev.clickNumber + 1
+      }))
       setClickedIndex(index)
       postClickedItem(cell.shapeId)
       if(cell.hasProducedFruit === false && cell.producedFruit === true){
