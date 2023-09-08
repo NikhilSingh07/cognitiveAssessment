@@ -6,16 +6,16 @@ CREATE DATABASE cognitiveAssessment_Database;
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     dob date,
-    sex VARCHAR(10),
-    qualifications VARCHAR(30),
-    language_profeciency VARCHAR (20),
-    vision VARCHAR(10),
-    handedness VARCHAR (10),
-    country VARCHAR (20),
-    city VARCHAR (20),
+    sex VARCHAR(50),
+    qualifications VARCHAR(50),
+    language_profeciency VARCHAR (50),
+    vision VARCHAR(30),
+    handedness VARCHAR (30),
+    country VARCHAR (50),
+    city VARCHAR (50),
     ethnicity VARCHAR(50),
     device_information VARCHAR(30),
-    disability VARCHAR(50)
+    disability VARCHAR(300)
 );
 
 
@@ -25,8 +25,8 @@ CREATE TABLE trials (
     trial_id SERIAL PRIMARY KEY,
     trial_date date ,
     trial_number integer,
-    trial_start_timestamp time,
-    trial_end_timestamp time,
+    trial_start_timestamp VARCHAR(100),
+    trial_end_timestamp VARCHAR(100),
     trail_status VARCHAR(15),
     user_id integer,
     FOREIGN KEY (user_id) REFERENCES users(user_id)

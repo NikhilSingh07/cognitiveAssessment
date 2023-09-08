@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import './FormPage.css';
 import { useHistory } from "react-router-dom";
 import { postFormData } from "../../apicalls/ApiCalls";
+import { useSetRecoilState } from "recoil";
+import JWTatom from "../../Recoil/Atoms/JWT";
+import ClickData from "../../Recoil/Atoms/ClickData";
 
 const FormPage = () => {
     const [formData, setFormData] = useState({
@@ -16,6 +19,8 @@ const FormPage = () => {
         ethnicity: '',
         disability: ''
       });
+    const setJWT = useSetRecoilState(JWTatom);
+    const setClickData = useSetRecoilState(ClickData)
     let history = useHistory();
     
       const handleChange = (e) => {
@@ -24,14 +29,25 @@ const FormPage = () => {
           ...prevData,
           [name]: value
         }));
-        console.log({formData})
       };
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        postFormData(formData)
-        {history.push("/game")}
+        postFormData(formData).then((resp) => {
+            setJWT((prev) => ({
+                ...prev,
+                token: resp.accessToken,
+            }))
+            setClickData((prev) => ({
+                ...prev,
+                currentTrial: resp.currentTrial,
+                fruitCount: resp.fruitCount,
+                patterns: resp.patterns,
+                shapeGrid: resp.shapeGrid
+            }))
+        }).then(() => {
+            history.push("/game")
+        })
       };
 
     return(
