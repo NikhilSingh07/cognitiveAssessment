@@ -72,7 +72,7 @@ export async function getInitialItems(jwt, val) {
       try {
         const requestOptions = {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'authorisation': jwt },
+          headers: { 'Content-Type': 'application/json', 'Authorisation': `Bearer ${jwt}` },
           body: JSON.stringify(clickData)
         };
         const response = await fetch('http://localhost:3000/assessment/clickedItem', requestOptions);
