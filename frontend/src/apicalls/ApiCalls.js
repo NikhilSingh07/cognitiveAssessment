@@ -30,37 +30,41 @@ export async function getInitialItems(jwt, val) {
 
 
 
-  export async function postFormData(formData) {
-    // if (process.env.NODE_ENV === "development") {
-    //   console.log({clickData})
-    //   return new Promise((resolve) => {
-    //     setTimeout(() => {
-    //       resolve(newData);
-    //     }, 1000);
-    //   });
-    // } 
-    // else 
+  export async function postFormData(formData, jwt) {
     {
-      // let headers = {
-      //   dob: formData.dateOfBirth,
-      //   sex: formData.sex,
-      //   qualifications: formData.qualifications,
-      //   language_proficiency: formData.languageProficiency,
-      //   vision: formData.vision,
-      //   handedness: formData.handedness,
-      //   country: formData.country,
-      //   city: formData.city,
-      //   ethnicity: formData.ethnicity,
-      //   device_information: "laptop",
-      //   disability: formData.disability
-      // }
+      let bodyVal = {
+        dob: formData.dateOfBirth,
+        sex: formData.sex,
+        qualifications: formData.qualifications,
+        language_proficiency: formData.languageProficiency,
+        vision: formData.vision,
+        handedness: formData.handedness,
+        country: formData.country,
+        city: formData.city,
+        ethnicity: formData.ethnicity,
+        device_information: "laptop",
+        disability: formData.disability
+      }
+      try{
       const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        Authorisation: jwt,
+        body: JSON.stringify(bodyVal)
       };
-      const response = await fetch('https://localhost:3000/assessment/testing', requestOptions)
-        .then((resp) => { console.log({resp});return resp.json()})
-      return response;
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+  
+      const response = await fetch('https://localhost:3000/user/register', requestOptions)
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;        
+      }
+      catch (error) {
+        console.error('An error occurred:', error.message);
+        throw error; // You can choose to rethrow the error or handle it differently.
+      }
     }
   } 
 

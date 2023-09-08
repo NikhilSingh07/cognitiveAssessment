@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import './FormPage.css';
 import { useHistory } from "react-router-dom";
 import { postFormData } from "../../apicalls/ApiCalls";
+import JWTatom from "../../Recoil/Atoms/JWT";
+import ClickData from "../../Recoil/Atoms/ClickData";
+import { useSetRecoilState } from "recoil";
 
 const FormPage = () => {
     const [formData, setFormData] = useState({
