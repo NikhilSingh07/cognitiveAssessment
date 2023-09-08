@@ -25,7 +25,7 @@ const Game = () => {
     const val = {
       shapeGrid: clickData.shapeGrid,
       patterns: clickData.patterns,
-      currentTrail: clickData.currentTrial,
+      currentTrial: clickData.currentTrial,
       fruitCount: clickData.fruitCount,
       date: today.toDateString(),
       timestamp: event.toString()
@@ -39,12 +39,13 @@ const Game = () => {
         currentTrial: resp.currentTrial,
         clickNumber: resp.click_number
       }))
+      const newGrid = [...resp.shapeGrid];
+      setGrid(newGrid);
     })
     console.log({response})
-    
-    const newGrid = [...response.shapeGrid];
-    setGrid(newGrid);
   }
+
+  
 
   async function postClickedItem(shapeID){
     let event = new Date();
@@ -53,7 +54,7 @@ const Game = () => {
       shapeGrid: clickData.shapeGrid,
       trial_id: clickData.trialId,
       patterns: clickData.patterns,
-      currentTrail: clickData.currentTrial,
+      currentTrial: clickData.currentTrial,
       fruitCount: clickData.fruitCount,
       timestamp: event.toString(),
       click_number: clickData.clickNumber

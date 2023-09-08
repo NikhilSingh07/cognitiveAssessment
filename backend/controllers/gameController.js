@@ -30,6 +30,8 @@ const initializeItems = (req, res) => {
    const patterns = req.body.patterns;
    let currentTrial = req.body.currentTrial;
    let fruitCount = req.body.fruitCount;
+   
+   //console.log("shapeGrid: "+shapeGrid, "\npatterns: "+patterns+"\ncurrentTrial: "+currentTrial, "\nfruitCount: "+fruitCount);
 
    if(shapeGrid !== null && shapeGrid !== undefined && patterns !== null && patterns !== undefined && 
       currentTrial !== null && currentTrial !== undefined && fruitCount !==null && fruitCount !==undefined &&
