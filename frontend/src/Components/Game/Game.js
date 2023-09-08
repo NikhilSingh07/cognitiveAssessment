@@ -7,7 +7,6 @@ import JWTatom from '../../Recoil/Atoms/JWT';
 import ClickData from '../../Recoil/Atoms/ClickData';
 
 const Game = () => {
-  const [grid, setGrid] = useState([]);
   const [showFruit, setShowFruit] = useState(false)
   const [clickIndex, setClickedIndex] = useState(null)
   const [clickData, setClickData] = useRecoilState(ClickData)
@@ -16,6 +15,10 @@ const Game = () => {
   useEffect(() => {
     getInitial();
   }, []);
+
+  useEffect(() => {
+    console.log("in useEffect for updating grid",clickData.shapeGrid)
+  }, [clickData.shapeGrid])
 
   async function getInitial(){
     let event = new Date();
@@ -39,13 +42,8 @@ const Game = () => {
         currentTrial: resp.currentTrial,
         clickNumber: resp.click_number
       }))
-      const newGrid = [...resp.shapeGrid];
-      setGrid(newGrid);
     })
-    console.log({response})
   }
-
-  
 
   async function postClickedItem(shapeID){
     let event = new Date();
@@ -67,15 +65,12 @@ const Game = () => {
         shapeGrid: resp.shapeGrid
       }))
     })
-    console.log({response})
-
-    const newGrid = [...response.shapeGrid];
-    setGrid(newGrid);
     setClickedIndex(null)
     setShowFruit(false)
   }
 
   const revealFruit = (cell, index) => {
+    console.log({cell})
     if(cell.shapeType !== "null"){
       setClickData((prev) => ({
         ...prev,
@@ -93,29 +88,29 @@ const Game = () => {
   return (
     <div>
       <div id="grid" className="grid">
-        {grid.map((cell, index) => (
+        {clickData.shapeGrid.length > 0 && clickData.shapeGrid.map((cell, index) => (
           <div
             key={index}
             className={`cell`}
             onClick={() => {revealFruit(cell, index)}}
             style={{ cursor: 'pointer' }}
           >
-            { clickIndex !== index && cell.shapeType === "Circle" && (
+            { clickIndex !== index && cell.shapeType === "circle" && (
                 <BsFillCircleFill color='#000000' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
-            { clickIndex !== index && cell.shapeType === "Star" && (
+            { clickIndex !== index && cell.shapeType === "star" && (
                 <BsFillStarFill color='#3366cc' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
-            { clickIndex !== index && cell.shapeType === "Triangle" && (
+            { clickIndex !== index && cell.shapeType === "triangle" && (
                 <BsFillTriangleFill color='#b800e6' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
-            { clickIndex !== index && cell.shapeType === "Hexagon" && (
+            { clickIndex !== index && cell.shapeType === "hexagon" && (
                 <BsFillHexagonFill color='#00c452' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
-            { clickIndex !== index && cell.shapeType === "Square" && (
+            { clickIndex !== index && cell.shapeType === "square" && (
                 <BsFillSquareFill color='#ffcc00' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
-            { clickIndex !== index && cell.shapeType === "Diamond" && (
+            { clickIndex !== index && cell.shapeType === "diamond" && (
                 <BsFillDiamondFill color='#ff0000' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
             {showFruit && cell.fruit !== "null" && clickIndex === index && (
