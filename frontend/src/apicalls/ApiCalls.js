@@ -8,7 +8,7 @@ export async function getInitialItems(jwt, val) {
       try {
         const requestOptions = {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'authorisation': `${jwt}` },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}`  },
           body: JSON.stringify(val)
         };
         const response = await fetch('http://localhost:3000/assessment/initializeItems', requestOptions);
