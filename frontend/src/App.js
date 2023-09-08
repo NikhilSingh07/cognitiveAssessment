@@ -11,21 +11,21 @@ import FormPage from './Components/FormPage/FormPage';
 
 const App = () => {
     return(
-        <Router>
-      <div>
-        <Switch>
-          <Route path="/game">
-            <Game />
-          </Route>
-          <Route path="/form">
-            <FormPage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/game">
+              <Game />
+            </Route>
+            <Route path="/form">
+              <FormPage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     )
 }
 
