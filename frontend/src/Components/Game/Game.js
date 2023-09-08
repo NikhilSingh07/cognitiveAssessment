@@ -30,7 +30,7 @@ const Game = () => {
       date: today.toDateString(),
       timestamp: event.toString()
     }
-    const response = await getInitialItems(val, jwt.token).then((resp) =>{
+    const response = await getInitialItems(jwt.token, val).then((resp) =>{
       setClickData((prev) => ({
         ...prev,
         shapeGrid: resp.shapeGrid,

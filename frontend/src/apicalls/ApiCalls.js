@@ -8,8 +8,7 @@ export async function getInitialItems(jwt, val) {
       try {
         const requestOptions = {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          Authorisation: jwt,
+          headers: { 'Content-Type': 'application/json', 'authorisation': `${jwt}` },
           body: JSON.stringify(val)
         };
         const response = await fetch('http://localhost:3000/assessment/initializeItems', requestOptions);
@@ -73,9 +72,8 @@ export async function getInitialItems(jwt, val) {
       try {
         const requestOptions = {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(clickData),
-          Authorisation: jwt
+          headers: { 'Content-Type': 'application/json', 'authorisation': jwt },
+          body: JSON.stringify(clickData)
         };
         const response = await fetch('http://localhost:3000/assessment/clickedItem', requestOptions);
     
