@@ -101,7 +101,7 @@ router.route('/clickedItem').post(protect, itemClicked);
 router.route('/next-trial').post(protect, nextTrial);
 
 
-router.route('/testing').post(testing);
+router.route('/testing').get(testing);
 
 module.exports = router;
 
