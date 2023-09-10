@@ -30,8 +30,10 @@ const initializeItems = (req, res) => {
    const patterns = req.body.patterns;
    let currentTrial = req.body.currentTrial;
    let fruitCount = req.body.fruitCount;
+   const date  = req.body.date;
+   const timestamp = req.body.timestamp;
    
-   //console.log("shapeGrid: "+shapeGrid, "\npatterns: "+patterns+"\ncurrentTrial: "+currentTrial, "\nfruitCount: "+fruitCount);
+   console.log("shapeGrid: "+shapeGrid, "\npatterns: "+patterns+"\ncurrentTrial: "+currentTrial, "\nfruitCount: "+fruitCount+"\ntimestamp: "+timestamp+"\ndate: "+date);
 
    if(shapeGrid !== null && shapeGrid !== undefined && patterns !== null && patterns !== undefined && 
       currentTrial !== null && currentTrial !== undefined && fruitCount !==null && fruitCount !==undefined &&
@@ -105,7 +107,7 @@ const itemClicked = (req, res) => {
     const currentTrial= req.body.currentTrial;
 
 
-   // console.log(shapeId);
+    //console.log("user_id: "+user_id+"\ntrial_id: "+trial_id+" \nclick_number: "+click);
     
     if(patterns.length != 0) {
 

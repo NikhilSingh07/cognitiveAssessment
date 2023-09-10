@@ -72,11 +72,11 @@ export async function getInitialItems(jwt, val) {
       try {
         const requestOptions = {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorisation': `Bearer ${jwt}` },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
           body: JSON.stringify(clickData)
         };
         const response = await fetch('http://localhost:3000/assessment/clickedItem', requestOptions);
-    
+      
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }

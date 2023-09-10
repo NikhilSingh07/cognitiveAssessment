@@ -11,7 +11,7 @@ dotenv.config({ path: envPath });
 const registerUser = async (req, res) =>{
 
     try{
-        console.log(req.body);
+       // console.log(req.body);
         
         const { dob, sex,qualifications, language_proficiency, vision, handedness, country, city, ethnicity,  device_information, disability} = req.body;
 

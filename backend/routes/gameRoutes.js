@@ -96,8 +96,7 @@ router.route('/clickedItem').post(protect, itemClicked);
     2. shapeGrid (to be updated in the session storage)
     3. patterns (to be updated in the session storage)
     4. fruitCount (to be updated in the session storage)
-    5. click_number: (YET TO IMPLEMENT)
-
+    5. click_number: (to be updated in the session storage)	
 */
 
 router.route('/next-trial').post(protect, nextTrial);
