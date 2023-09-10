@@ -17,7 +17,7 @@ const Game = () => {
   }, []);
 
   useEffect(() => {
-    console.log("in useEffect for updating grid",clickData.shapeGrid)
+    console.log("in useEffect for updating grid",clickData)
   }, [clickData.shapeGrid])
 
   async function getInitial(){
@@ -38,7 +38,7 @@ const Game = () => {
         ...prev,
         shapeGrid: resp.shapeGrid,
         patterns: resp.patterns,
-        trialId: resp.trialId,
+        trialId: resp.trial_id,
         currentTrial: resp.currentTrial,
         clickNumber: resp.click_number
       }))
@@ -66,23 +66,28 @@ const Game = () => {
       }))
     })
     setClickedIndex(null)
-    setShowFruit(false)
+    setShowFruit(false);
   }
 
+  const delayedFunction = (shapeID) => {
+    setTimeout(() => {
+      postClickedItem(shapeID)
+    }, 1000); // Delay for 1 second (1000 milliseconds)
+  };
+
   const revealFruit = (cell, index) => {
-    console.log({cell})
     if(cell.shapeType !== "null"){
       setClickData((prev) => ({
         ...prev,
         clickNumber: prev.clickNumber + 1
       }))
-      setClickedIndex(index)
-      postClickedItem(cell.shapeId)
-      if(cell.hasProducedFruit === false && cell.producedFruit === true){
-        setShowFruit(true)
-        console.log({cell})
+      
+      // if(cell.hasProducedFruit === false && cell.producedFruit === true){
+          setClickedIndex(index);
+          setShowFruit(true);
+          delayedFunction(cell.shapeId)
+      // }
     }
-  }
   };
 
   return (
