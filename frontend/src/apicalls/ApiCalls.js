@@ -69,6 +69,7 @@ export async function getInitialItems(jwt, val) {
   } 
 
   export async function postClicked(clickData, jwt) {    
+    console.log({clickData})
       try {
         const requestOptions = {
           method: 'POST',
