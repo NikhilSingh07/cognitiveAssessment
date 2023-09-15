@@ -27,8 +27,6 @@ export async function getInitialItems(jwt, val) {
       }
   }
 
-
-
   export async function postFormData(formData) {
     {
       try{
@@ -90,4 +88,27 @@ export async function getInitialItems(jwt, val) {
         console.error('An error occurred:', error.message);
         throw error; // You can choose to rethrow the error or handle it differently.
       }
+}
+
+export async function getNextTrial(jwt, val) {
+  try {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}`  },
+      body: JSON.stringify(val)
+    };
+    const response = await fetch('http://localhost:3000/assessment/next-trial', requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log(responseData);
+    return responseData;
+  } 
+  catch (error) {
+    console.error('An error occurred:', error.message);
+    throw error; // You can choose to rethrow the error or handle it differently.
+  }
 }

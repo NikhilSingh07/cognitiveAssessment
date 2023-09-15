@@ -8,6 +8,7 @@ import {
 import Game from './Components/Game/Game';
 import HomePage from './Components/HomePage/HomePage';
 import FormPage from './Components/FormPage/FormPage';
+import NextPage from './Components/NextPage/NextPage';
 
 const App = () => {
     return(
@@ -19,6 +20,9 @@ const App = () => {
             </Route>
             <Route path="/form">
               <FormPage />
+            </Route>
+            <Route path="/next">
+              <NextPage />
             </Route>
             <Route path="/">
               <HomePage />

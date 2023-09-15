@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './FormPage.css';
 import { useHistory } from "react-router-dom";
-import { postFormData } from "../../apicalls/ApiCalls";
+import { getInitialItems, postFormData } from "../../apicalls/ApiCalls";
 import JWTatom from "../../Recoil/Atoms/JWT";
 import ClickData from "../../Recoil/Atoms/ClickData";
 import { useSetRecoilState } from "recoil";
@@ -22,7 +22,7 @@ const FormPage = () => {
     const setJWT = useSetRecoilState(JWTatom);
     const setClickData = useSetRecoilState(ClickData)
     let history = useHistory();
-    
+
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -30,21 +30,47 @@ const FormPage = () => {
           [name]: value
         }));
       };
+
+      async function getInitial(token, res){
+        let event = new Date();
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+    
+        const val = {
+          shapeGrid: res.shapeGrid,
+          patterns: res.patterns,
+          currentTrial: res.currentTrial,
+          fruitCount: res.fruitCount,
+          date: today.toDateString(),
+          timestamp: event.toString()
+        }
+        const response = await getInitialItems(token, val).then((resp) =>{
+          setClickData((prev) => ({
+            ...prev,
+            shapeGrid: resp?.shapeGrid,
+            patterns: resp?.patterns,
+            trialId: resp?.trial_id,
+            currentTrial: resp?.currentTrial,
+            clickNumber: resp?.click_number
+          }))
+        })
+      }
     
       const handleSubmit = (e) => {
         e.preventDefault();
         postFormData(formData).then((resp) => {
             setJWT((prev) => ({
                 ...prev,
-                token: resp.accessToken,
+                token: resp?.accessToken,
             }))
             setClickData((prev) => ({
                 ...prev,
-                currentTrial: resp.currentTrial,
-                fruitCount: resp.fruitCount,
-                patterns: resp.patterns,
-                shapeGrid: resp.shapeGrid
+                currentTrial: resp?.currentTrial,
+                fruitCount: resp?.fruitCount,
+                patterns: resp?.patterns,
+                shapeGrid: resp?.shapeGrid
             }))
+            getInitial(resp.accessToken, resp)
         }).then(() => {
             history.push("/game")
         })
@@ -108,13 +134,17 @@ const FormPage = () => {
                 
                 <div className="item">
                     <label>Vision:</label>
-                    <input
+                    <select
                     type="text"
                     name="vision"
                     value={formData.vision}
                     onChange={handleChange}
                     required
-                    />
+                    >
+                    <option value="">Select</option>
+                    <option value="fixed">Fixed</option>
+                    <option value="normal">Normal</option>
+                    </select>
                 </div>
 
                 <div className="item">
@@ -133,7 +163,7 @@ const FormPage = () => {
                 </div>
 
                 <div className="item">
-                    <label>Country:</label>
+                    <label>Country:</label> 
                     <input
                     type="text"
                     name="country"

@@ -1,6 +1,6 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    margin: 0;
+    font-family: cursive;
+    background: #343435; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,6 +14,7 @@ body {
     padding: 30px;
     width: 400px;
     text-align: center;
+    color:black;
   }
   
   h1 {
@@ -56,6 +57,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: cursive;
   }
   
   .submit-button:hover {
