@@ -17,9 +17,10 @@ const protect = asyncHandler((req, res, next) =>{
             // Get token from header.
             token = req.headers.authorization.split(' ')[1];
 
+            
             // Verify the token.
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
+           // console.log("decoded: "+decoded);
             // Get user_id from the token.
             req.user_id = decoded.user_id;
             next();
@@ -33,6 +34,7 @@ const protect = asyncHandler((req, res, next) =>{
     }
 
     if(!token) {
+
         res.status(401);
         throw new Error('Not authorized, no token.');
     }

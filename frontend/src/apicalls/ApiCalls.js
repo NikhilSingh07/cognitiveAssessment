@@ -75,7 +75,7 @@ export async function getInitialItems(jwt, val) {
           body: JSON.stringify(clickData)
         };
         const response = await fetch('http://localhost:3000/assessment/clickedItem', requestOptions);
-    
+      
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }

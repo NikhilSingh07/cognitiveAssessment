@@ -11,15 +11,15 @@ dotenv.config({ path: envPath });
 const registerUser = async (req, res) =>{
 
     try{
-        console.log(req.body);
+       // console.log(req.body);
         
-        const { dob, sex,qualifications, language_proficiency, vision, handedness, country, city, ethnicity,  device_information, disability} = req.body;
+        const { age, sex,qualifications, language_proficiency, vision, handedness, country, city, ethnicity,  device_information, disability} = req.body;
 
 // Parse the dob string into a Date object
-const parsedDob = new Date(dob);
+const parsedAge = parseInt(age);
 
 if (
-    parsedDob !== undefined && parsedDob instanceof Date && !isNaN(parsedDob.getTime()) &&
+    !isNaN(parsedAge) &&  parsedAge >= 0 &&  parsedAge <= 150 &&
     sex !== undefined && typeof sex === "string" && sex.trim() !== "" &&
     qualifications !== undefined && typeof qualifications === "string" && qualifications.trim() !== "" &&
     language_proficiency !== undefined && typeof language_proficiency === "string" && language_proficiency.trim() !== "" &&
@@ -31,10 +31,10 @@ if (
     device_information !== undefined && typeof device_information === "string" && device_information.trim() !== "" &&
     disability !== undefined && typeof disability === "string" && disability.trim() !== ""
 ) {
-    const { dob, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability } = req.body;
+    //const { age, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability } = req.body;
     const newUser = await pool.query(
-        "INSERT INTO users (dob, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
-        [parsedDob, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability]
+        "INSERT INTO users (age, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
+        [parsedAge, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability]
     );
 
     
