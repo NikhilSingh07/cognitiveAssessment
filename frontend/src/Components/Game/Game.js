@@ -62,7 +62,7 @@ const Game = () => {
       click_number: clickData.clickNumber
     }
     const response = await postClicked(clickEvent, jwt.token).then((resp) => {
-      if(resp.currentTrial === 6  && resp.fruitCount === 6){
+      if(clickData.currentTrial === 6  && resp.fruitCount === 6){
         history.push('/over')
       }
       else

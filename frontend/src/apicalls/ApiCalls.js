@@ -40,7 +40,7 @@ export async function getInitialItems(jwt, val) {
           country: formData.country,
           city: formData.city,
           ethnicity: formData.ethnicity,
-          device_information: "laptop",
+          device_information: formData.device,
           disability: formData.disability
         }
         const requestOptions = {

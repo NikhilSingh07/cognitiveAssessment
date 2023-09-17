@@ -17,6 +17,7 @@ const FormPage = () => {
         country: '',
         city: '',
         ethnicity: '',
+        device: '',
         disability: ''
       });
     const setJWT = useSetRecoilState(JWTatom);
@@ -81,7 +82,7 @@ const FormPage = () => {
         <div className="container">
             <form className="form" onSubmit={handleSubmit}>
                 <div className="item">
-                    <label>Age</label>
+                    <label>Age:</label>
                     <input
                     type="number"
                     name="age"
@@ -194,6 +195,22 @@ const FormPage = () => {
                     onChange={handleChange}
                     required
                     />
+                </div>
+
+                <div className="item">
+                    <label>Device:</label>
+                    <select
+                    name="device"
+                    value={formData.device}
+                    onChange={handleChange}
+                    required
+                    >
+                    <option value="">Select a Device</option>
+                    <option value="Laptop">Laptop</option>
+                    <option value="Mobile Phone">Mobile Phone</option>
+                    <option value="Tablet">Tablet</option>
+                    <option value="Desktop Computer">Desktop Computer</option>
+                    </select>
                 </div>
 
                 <div className="item">
