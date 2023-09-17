@@ -62,7 +62,10 @@ const Game = () => {
       click_number: clickData.clickNumber
     }
     const response = await postClicked(clickEvent, jwt.token).then((resp) => {
-      
+      if(resp.currentTrial === 6  && resp.fruitCount === 6){
+        history.push('/over')
+      }
+      else
       if(resp.fruitCount < 6){
         setClickData((prev) => ({
           ...prev,
@@ -136,7 +139,7 @@ const Game = () => {
                 <BsFillDiamondFill color='#fff' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
             {showFruit && cell.fruit !== "null" && clickIndex === index && cell.hasProducedFruit !== true && (
-              <div className="fruit-label">{cell.fruit === "Pear" ? `🍐` : `🍎`}</div>
+              <div className="fruit-label">{cell.fruit === "pear" ? `🍐` : `🍎`}</div>
             )}
           </div>
         ))}

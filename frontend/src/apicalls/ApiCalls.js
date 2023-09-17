@@ -31,7 +31,7 @@ export async function getInitialItems(jwt, val) {
     {
       try{
         let bodyVal = {
-          dob: formData.dateOfBirth,
+          age: formData.age,
           sex: formData.sex,
           qualifications: formData.qualifications,
           language_proficiency: formData.languageProficiency,

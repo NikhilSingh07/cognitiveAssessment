@@ -9,12 +9,16 @@ import Game from './Components/Game/Game';
 import HomePage from './Components/HomePage/HomePage';
 import FormPage from './Components/FormPage/FormPage';
 import NextPage from './Components/NextPage/NextPage';
+import GameOver from './Components/GameOver/GameOver';
 
 const App = () => {
     return(
       <Router>
         <div>
           <Switch>
+          <Route path="/over">
+              <GameOver />
+            </Route>
             <Route path="/game">
               <Game />
             </Route>

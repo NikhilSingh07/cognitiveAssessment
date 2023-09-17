@@ -8,7 +8,7 @@ import { useSetRecoilState } from "recoil";
 
 const FormPage = () => {
     const [formData, setFormData] = useState({
-        dateOfBirth: '',
+        age: '',
         sex: '',
         qualifications: '',
         languageProficiency: '',
@@ -58,6 +58,7 @@ const FormPage = () => {
     
       const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Submit")
         postFormData(formData).then((resp) => {
             setJWT((prev) => ({
                 ...prev,
@@ -80,11 +81,11 @@ const FormPage = () => {
         <div className="container">
             <form className="form" onSubmit={handleSubmit}>
                 <div className="item">
-                    <label>Date of Birth:</label>
+                    <label>Age</label>
                     <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
+                    type="number"
+                    name="age"
+                    value={formData.age}
                     onChange={handleChange}
                     required
                     />
