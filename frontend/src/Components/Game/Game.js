@@ -5,19 +5,22 @@ import { getInitialItems, postClicked } from '../../apicalls/ApiCalls';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import JWTatom from '../../Recoil/Atoms/JWT';
 import ClickData from '../../Recoil/Atoms/ClickData';
+import { useHistory } from "react-router-dom";
 
 const Game = () => {
   const [showFruit, setShowFruit] = useState(false)
   const [clickIndex, setClickedIndex] = useState(null)
   const [clickData, setClickData] = useRecoilState(ClickData)
+  const [grid, setGrid] = useState([])
   const jwt = useRecoilValue(JWTatom)
+  let history = useHistory();
 
   useEffect(() => {
-    getInitial();
-  }, []);
+    setGrid(clickData.shapeGrid)
+  }, [clickData.shapeGrid]);
 
   useEffect(() => {
-    console.log("in useEffect for updating grid",clickData)
+    console.log("in useEffect for updating grid",clickData, grid)
   }, [clickData.shapeGrid])
 
   async function getInitial(){
@@ -36,12 +39,13 @@ const Game = () => {
     const response = await getInitialItems(jwt.token, val).then((resp) =>{
       setClickData((prev) => ({
         ...prev,
-        shapeGrid: resp.shapeGrid,
-        patterns: resp.patterns,
-        trialId: resp.trial_id,
-        currentTrial: resp.currentTrial,
-        clickNumber: resp.click_number
+        shapeGrid: resp?.shapeGrid,
+        patterns: resp?.patterns,
+        trialId: resp?.trial_id,
+        currentTrial: resp?.currentTrial,
+        clickNumber: resp?.click_number
       }))
+      setGrid(resp.shapeGrid)
     })
   }
 
@@ -58,12 +62,27 @@ const Game = () => {
       click_number: clickData.clickNumber
     }
     const response = await postClicked(clickEvent, jwt.token).then((resp) => {
-      setClickData((prev) => ({
-        ...prev,
-        clickNumber: resp.click_number,
-        fruitCount: resp.fruitCount,
-        shapeGrid: resp.shapeGrid
-      }))
+      if(clickData.currentTrial === 6  && resp.fruitCount === 6){
+        history.push('/over')
+      }
+      else
+      if(resp.fruitCount < 6){
+        setClickData((prev) => ({
+          ...prev,
+          clickNumber: resp?.click_number,
+          fruitCount: resp?.fruitCount,
+          shapeGrid: resp?.shapeGrid
+        }))
+        // setGrid(resp.shapeGrid)
+      }
+      else{
+        setClickData((prev) => ({
+          ...prev,
+          clickNumber: resp?.click_number,
+          fruitCount: resp?.fruitCount,
+        }))
+        history.push("/next")
+      }
     })
     setClickedIndex(null)
     setShowFruit(false);
@@ -90,10 +109,11 @@ const Game = () => {
     }
   };
 
+  //hasProducedfruit === true, don't display
   return (
     <div>
       <div id="grid" className="grid">
-        {clickData.shapeGrid.length > 0 && clickData.shapeGrid.map((cell, index) => (
+        {grid.length > 0 && grid.map((cell, index) => (
           <div
             key={index}
             className={`cell`}
@@ -116,10 +136,10 @@ const Game = () => {
                 <BsFillSquareFill color='#ffcc00' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
             { clickIndex !== index && cell.shapeType === "diamond" && (
-                <BsFillDiamondFill color='#ff0000' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
+                <BsFillDiamondFill color='#fff' fontSize={cell.shapeSize === "large" ? `7rem` : (cell.shapeSize === "medium" ? `4.5rem` : `2.5rem`)} />
             )}
-            {showFruit && cell.fruit !== "null" && clickIndex === index && (
-              <div className="fruit-label">{cell.fruit === "Pear" ? `🍐` : `🍎`}</div>
+            {showFruit && cell.fruit !== "null" && clickIndex === index && cell.hasProducedFruit !== true && (
+              <div className="fruit-label">{cell.fruit === "pear" ? `🍐` : `🍎`}</div>
             )}
           </div>
         ))}
