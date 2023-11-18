@@ -62,8 +62,12 @@ Follow these steps to run the Cognitive Assessment Application on your computer:
 
 ### 5. Set up the database
 
-     5.1. Create a PostgreSQL database.
-     5.2. Update the database configuration in the config folder.
+      1. Create a PostgreSQL database.
+      2. Open the 'database.sql'file in the 'backend/database' directory.
+      3. Copy the content of database.sql.
+      4. Open your PostgreSQL command line or a tool like pgAdmin.
+      5. Paste and execute the SQL code to create the necessary tables and setup the database.
+      6. Update the database configuration in the config folder.
 
 
 
