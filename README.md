@@ -60,5 +60,10 @@ Follow these steps to run the Cognitive Assessment Application on your computer:
       cd backend
       npm install
 
+### 5. Set up the database
+
+     5.1. Create a PostgreSQL database.
+     5.2. Update the database configuration in the config folder.
+
 
 
