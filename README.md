@@ -25,6 +25,6 @@ This project addresses linguistic and cultural challenges in cognitive assessmen
 
 ### Hidden Patterns
 
-• Pattern 1: Shapes never produce fruits.
-• Pattern 2: Subsequent shapes yield fruit in every consecutive trial.
-• Pattern 3: Subsequent shapes yield fruit in every alternate trial.
+• Pattern 1: Shapes never produce fruits.  
+• Pattern 2: Subsequent shapes yield fruit in every consecutive trial.  
+• Pattern 3: Subsequent shapes yield fruit in every alternate trial.  
