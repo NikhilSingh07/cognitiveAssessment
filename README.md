@@ -28,3 +28,9 @@ This project addresses linguistic and cultural challenges in cognitive assessmen
 • Pattern 1: Shapes never produce fruits.  
 • Pattern 2: Subsequent shapes yield fruit in every consecutive trial.  
 • Pattern 3: Subsequent shapes yield fruit in every alternate trial.  
+
+## Why it Matters?
+
+This app isn't just about playing games. It's a smart way to understand how our brains work, especially when it comes to memory and problem-solving. Plus, it's designed to be fair and consider different languages and cultures.  
+
+
