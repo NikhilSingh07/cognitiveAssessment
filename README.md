@@ -57,7 +57,7 @@ Follow these steps to run the Cognitive Assessment Application on your computer:
       3. Copy the content of database.sql.
       4. Open your PostgreSQL command line or a tool like pgAdmin.
       5. Paste and execute the SQL code to create the necessary tables and setup the database.
-      6. Update the database configuration in the config folder.
+      6. Update the database configuration in the backend/.env file.
        
 
 ### 4. Set up the React App
