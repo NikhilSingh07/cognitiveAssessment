@@ -16,7 +16,7 @@ This project addresses linguistic and cultural challenges in cognitive assessmen
 
 🎮 Game-Like Format: Users explore 18 items (6 shapes, 3 sizes) within a captivating and interactive environment.
 
-🎯 Objective: The primary goal is to search for 6 hidden fruits beneath 6 items in each trial, introducing an element of challenge and concentration.
+🎯 Objective: The primary goal is to search for 6 hidden fruits beneath 6 items in each trial.
 
 🧠 Cognitive Challenge: Clicking an item shuffles positions, evaluating foraging efficiency and working memory as users adapt to the changing environment.
 
