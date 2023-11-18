@@ -69,5 +69,20 @@ Follow these steps to run the Cognitive Assessment Application on your computer:
       5. Paste and execute the SQL code to create the necessary tables and setup the database.
       6. Update the database configuration in the config folder.
 
+### 6. Run the Application
+
+Open two terminal windows:
+
+In one window, navigate to the frontend folder and run:
+                        
+      npm start
+      
+In the other window, navigate to the backend folder and run:      
+
+      npm start
+
+
+That's it! 
+You've successfully set up and run the Cognitive Assessment Application on your computer. Have fun exploring and testing your cognitive abilities!
 
 
