@@ -11,7 +11,7 @@ POST http://localhost:3000/user/register
 
  EXPECTING: below information in JSON
 
-   1. dob
+   1. age
    2. sex,
    3. qualifications,
    4. language_proficiency,

@@ -13,7 +13,7 @@ const protect = require('../middleware/authMiddleware');
 
     1. shapeGrid
     2. patterns
-    3. currentTrail
+    3. currentTrial
     4. fruitCount
     5. date
     6. timestamp
@@ -63,7 +63,8 @@ router.route('/getPatterns').post(protect, getGamePatterns);
 
     RETURNING (JSON):
 
-    1. trial_id (NO NEED to update in the session storage as trial id will remain same for the current trial. It will change when user enter's the next trial)
+    1. trial_id (NO NEED to update in the session storage as trial id will remain same for the current trial. 
+       It will change when user enter's the next trial)
     2. currentTrial (NO NEED to update in the session storage)
 
     3. click_number (to be updated in the session storage)

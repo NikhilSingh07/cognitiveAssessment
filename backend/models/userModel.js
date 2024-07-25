@@ -10,6 +10,7 @@ dotenv.config({ path: envPath });
 
 const registerUser = async (req, res) =>{
 
+    //console.log("register called!");
     try{
        // console.log(req.body);
         

@@ -5,8 +5,8 @@ CREATE DATABASE cognitiveAssessment_Database;
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    dob date,
     sex VARCHAR(50),
+    age INTEGER,
     qualifications VARCHAR(50),
     language_profeciency VARCHAR (50),
     vision VARCHAR(30),
@@ -27,7 +27,7 @@ CREATE TABLE trials (
     trial_number integer,
     trial_start_timestamp VARCHAR(100),
     trial_end_timestamp VARCHAR(100),
-    trail_status VARCHAR(15),
+    trial_status VARCHAR(15),
     user_id integer,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
@@ -54,7 +54,17 @@ CREATE TABLE clicks(
 	user_id INTEGER,
 	trial_id INTEGER,
 	item_id INTEGER,
+    fruit_id INTEGER,
 	FOREIGN KEY(user_id) REFERENCES users(user_id),
 	FOREIGN KEY(trial_id) REFERENCES trials(trial_id),
-	FOREIGN KEY(item_id) REFERENCES items(item_id)
+	FOREIGN KEY(item_id) REFERENCES items(item_id),
+    FOREIGN KEY(fruit_id) REFERENCES fruits(fruit_id)
+);
+
+/*fruits schema*/
+
+CREATE TABLE fruits(
+
+    fruit_id SERIAL PRIMARY KEY,
+    fruit_type VARCHAR(20)
 );

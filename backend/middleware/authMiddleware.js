@@ -14,27 +14,28 @@ const protect = asyncHandler((req, res, next) =>{
 
         try {
 
-            // Get token from header.
+            // Get token from the request header.
             token = req.headers.authorization.split(' ')[1];
 
             
-            // Verify the token.
+            // Verify the token using a secret key.
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-           // console.log("decoded: "+decoded);
-            // Get user_id from the token.
+            
+           // Get the user_id from the decoded token and attach it to the request object.
             req.user_id = decoded.user_id;
+
+            // Call the next middleware or route handler.
             next();
 
-        } catch (error) {
-            
+        } catch (error) {      
             console.log(error.message);
             res.status(401);
             throw new Error('Not authorized');
         }
     }
-
     if(!token) {
 
+        // If there's no token in the header, return an unauthorized response.
         res.status(401);
         throw new Error('Not authorized, no token.');
     }
