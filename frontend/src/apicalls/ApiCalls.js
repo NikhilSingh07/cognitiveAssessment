@@ -3,6 +3,10 @@ import initialData from "../Mock/InitializeItems.json"
 import newData from "../Mock/clickedItems.json"
 
 
+const URLinitializeItems = process.env.NODE_ENV === 'production' ? "assessment/initializeItems": "http://localhost:3001/assessment/initializeItems";
+const URLuserRegister = process.env.NODE_ENV === 'production'?"user/register" : "http://localhost:3001/user/register";
+const URLclickedItem = process.env.NODE_ENV === 'production' ? "assessment/clickedItem" : "http://localhost:3001/assessment/clickedItem";
+const URLnextTrial = process.env.NODE_ENV === 'production'? "assessment/next-trial": "http://localhost:3001/assessment/next-trial";
 
 export async function getInitialItems(jwt, val) {
       try {
@@ -11,7 +15,7 @@ export async function getInitialItems(jwt, val) {
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}`  },
           body: JSON.stringify(val)
         };
-        const response = await fetch('http://localhost:3000/assessment/initializeItems', requestOptions);
+        const response = await fetch(URLinitializeItems, requestOptions);
     
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -49,7 +53,7 @@ export async function getInitialItems(jwt, val) {
           body: JSON.stringify(bodyVal)
         };
         
-        const response = await fetch('http://localhost:3000/user/register', requestOptions)
+        const response = await fetch(URLuserRegister, requestOptions)
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -74,7 +78,7 @@ export async function getInitialItems(jwt, val) {
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}` },
           body: JSON.stringify(clickData)
         };
-        const response = await fetch('http://localhost:3000/assessment/clickedItem', requestOptions);
+        const response = await fetch(URLclickedItem, requestOptions);
       
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
@@ -97,7 +101,7 @@ export async function getNextTrial(jwt, val) {
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}`  },
       body: JSON.stringify(val)
     };
-    const response = await fetch('http://localhost:3000/assessment/next-trial', requestOptions);
+    const response = await fetch(URLnextTrial, requestOptions);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);

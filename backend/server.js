@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = process.env.PORTNUMBER || 3001;
 
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes= require('./routes/userRoutes');
