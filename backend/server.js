@@ -1,14 +1,18 @@
+const dotenv = require("dotenv");
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORTNUMBER || 3001;
+dotenv.config(); 
 
+const port = process.env.PORTNUMBER || 3001;
+//const port = 3001
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes= require('./routes/userRoutes');
 
 app.use(express.json());
 app.use(cookieParser());
+
 
 app.use(cors());
 

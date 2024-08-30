@@ -32,7 +32,8 @@ export async function getInitialItems(jwt, val) {
   }
 
   export async function postFormData(formData) {
-    {
+    console.log("post form data called");
+    
       try{
         let bodyVal = {
           age: formData.age,
@@ -52,22 +53,25 @@ export async function getInitialItems(jwt, val) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(bodyVal)
         };
+
+        console.log("Response up");
         
         const response = await fetch(URLuserRegister, requestOptions)
 
+        console.log("Response down");
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
 
         const responseData = await response.json();
-        console.log(responseData);
+        console.log("Form submitted successfully",responseData);
         return responseData;        
       }
       catch (error) {
         console.error('An error occurred:', error.message);
         throw error; // You can choose to rethrow the error or handle it differently.
       }
-    }
+    
   } 
 
   export async function postClicked(clickData, jwt) {    

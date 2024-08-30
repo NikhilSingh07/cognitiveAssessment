@@ -12,7 +12,7 @@ const registerUser = async (req, res) =>{
 
     //console.log("register called!");
     try{
-       // console.log(req.body);
+       console.log(req.body);
         
         const { age, sex,qualifications, language_proficiency, vision, handedness, country, city, ethnicity,  device_information, disability} = req.body;
 
@@ -32,29 +32,33 @@ if (
     device_information !== undefined && typeof device_information === "string" && device_information.trim() !== "" &&
     disability !== undefined && typeof disability === "string" && disability.trim() !== ""
 ) {
+
+    console.log("here 0");
     //const { age, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability } = req.body;
     const newUser = await pool.query(
         "INSERT INTO users (age, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
         [parsedAge, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability]
     );
 
+    console.log("here 1");
     
         const user_id = newUser.rows[0].user_id;
       /*  res.json({ message: "user registration succesful", 
                     user_id: user_id });*/
+                    console.log("here 2");
 
         const accessToken = generateAccessToken(user_id);  
         res.json({message: "User registration and auto login succesful", accessToken: accessToken, shapeGrid: shapeGrid, patterns: patterns, fruitCount: getFruitCount(), currentTrial: getCurrentTrial()});
 
-
+        console.log("here 3");
         } else {
-
+            console.log("here 4");
             res.json({message: "form is not complete!."});
         }
 
 
     } catch(err) {
-
+        console.log("catch called in register user model");
         console.error(err.message);
     } 
 }
