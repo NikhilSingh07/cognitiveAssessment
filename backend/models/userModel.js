@@ -33,7 +33,22 @@ if (
     disability !== undefined && typeof disability === "string" && disability.trim() !== ""
 ) {
 
-    console.log("here 0");
+
+    console.log("testing connection to the database");
+
+    // testing the connection to the database
+pool.connect(err => {
+    if (err) {
+      console.error('Connection error', err.stack);
+      console.log("PGUSER:", process.env.PGUSER);
+      console.log("PGPASSWORD:", process.env.PGPASSWORD);
+      console.log("PGHOST:", process.env.PGHOST);
+      console.log("PGDATABASE:", process.env.PGDATABASE);
+      console.log("PGPORTNUMBER:",process.env.PGPORT);
+    } else {
+      console.log('Connected to database');
+    }
+  });
     //const { age, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability } = req.body;
     const newUser = await pool.query(
         "INSERT INTO users (age, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
