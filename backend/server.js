@@ -20,8 +20,6 @@ app.use('/assessment/', gameRoutes);
 app.use('/user/', userRoutes);
 
 app.listen(port, () => {
-  console.log("Gand mari hui hai: ",process.env.PORTNUMBER);
-  console.log("fir se Gand mari hui hai: ",process.env.PGUSER);
-  console.log("fir fir se Gand mari hui hai: ",process.env.PGPASSWORD);
+
   console.log(`Example app listening on port ${port}`);
 });

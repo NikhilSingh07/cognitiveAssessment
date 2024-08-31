@@ -55,7 +55,7 @@ pool.connect(err => {
         [parsedAge, sex, qualifications, language_proficiency, vision, handedness, country, city, ethnicity, device_information, disability]
     );
 
-    console.log("here 1");
+    
     
         const user_id = newUser.rows[0].user_id;
       /*  res.json({ message: "user registration succesful", 
@@ -65,9 +65,9 @@ pool.connect(err => {
         const accessToken = generateAccessToken(user_id);  
         res.json({message: "User registration and auto login succesful", accessToken: accessToken, shapeGrid: shapeGrid, patterns: patterns, fruitCount: getFruitCount(), currentTrial: getCurrentTrial()});
 
-        console.log("here 3");
+        
         } else {
-            console.log("here 4");
+            
             res.json({message: "form is not complete!."});
         }
 
