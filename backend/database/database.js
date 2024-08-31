@@ -16,4 +16,18 @@ const pool = new Pool({
 
 });
 
+// testing the connection to the database
+pool.connect(err => {
+    if (err) {
+      console.error('Connection error', err.stack);
+      console.log("PGUSER:", process.env.PGUSER);
+      console.log("PGPASSWORD:", process.env.PGPASSWORD);
+      console.log("PGHOST:", process.env.PGHOST);
+      console.log("PGDATABASE:", process.env.PGDATABASE);
+      console.log("PGPORTNUMBER:",process.env.PGPORT);
+    } else {
+      console.log('Connected to database');
+    }
+  });
+
 module.exports = pool;
